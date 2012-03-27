@@ -167,7 +167,7 @@ $(function () {
         combobox.$menu.remove()
       })
 
-      test("should clear input and select and remove class from container when button is clicked when item is selected", function () {
+      test("should clear and focus input and select and remove class from container when button is clicked when item is selected", function () {
         var $select = $('<select><option></option><option>aa</option><option>ab</option><option>ac</option></select>')
           , $input = $select.combobox().data('combobox').$element
           , combobox = $select.data('combobox')
@@ -184,6 +184,8 @@ $(function () {
 
         equals($input.val(), '', 'input value was cleared correctly')
         equals($select.val(), '', 'select value was cleared correctly')
+        // ok($input.is(":focus"), 'input has focus')
+
         combobox.$menu.remove()
       })
 
