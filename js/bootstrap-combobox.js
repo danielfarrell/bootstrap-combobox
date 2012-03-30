@@ -56,7 +56,7 @@
       var map = {}
         , source = []
         , selected = false
-      this.$element.siblings('select').find('option').each(function() {
+      this.$target.find('option').each(function() {
         var option = $(this)
         map[option.html()] = option.val()
         source.push(option.html())
@@ -134,6 +134,15 @@
         .on('click', $.proxy(this.toggle, this))
     }
 
+  // modified typeahead function to only hide menu if it is visible
+  , blur: function (e) {
+      var that = this
+      e.stopPropagation()
+      e.preventDefault()
+      if (this.shown) {
+        setTimeout(function () { that.hide() }, 150)
+      }
+    }
   })
 
   /* COMBOBOX PLUGIN DEFINITION
