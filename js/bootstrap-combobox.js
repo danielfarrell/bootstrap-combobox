@@ -73,7 +73,7 @@
   , toggle: function () {
     if (this.$container.hasClass('combobox-selected')) {
       this.$target.val('')
-      this.$element.val('')
+      this.$element.val('').focus()
       this.$container.removeClass('combobox-selected')
     } else {
       if (this.shown) {
