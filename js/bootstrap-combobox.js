@@ -30,9 +30,8 @@
     this.sorter = this.options.sorter || this.sorter
     this.highlighter = this.options.highlighter || this.highlighter
     this.$menu = $(this.options.menu).appendTo('body')
-    this.source = this.parse()
-    this.options.items = this.source.length
     this.shown = false
+    this.refresh()
     this.listen()
   }
 
@@ -82,6 +81,11 @@
         this.lookup()
       }
     }
+  }
+
+  , refresh: function () {
+    this.source = this.parse()
+    this.options.items = this.source.length
   }
 
   // modified typeahead function adding container and target handling
