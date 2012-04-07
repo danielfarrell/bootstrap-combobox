@@ -30,6 +30,7 @@
     this.sorter = this.options.sorter || this.sorter
     this.highlighter = this.options.highlighter || this.highlighter
     this.$menu = $(this.options.menu).appendTo('body')
+    this.forceMatch = this.options.forceMatch || false
     this.shown = false
     this.refresh()
     this.listen()
@@ -143,6 +144,11 @@
       var that = this
       e.stopPropagation()
       e.preventDefault()
+      var val = this.$element.val();
+      if (this.forceMatch && this.matcher(val) == -1) {
+        this.$element.val("")
+        this.$target.val("").trigger('change')
+      }
       if (this.shown) {
         setTimeout(function () { that.hide() }, 150)
       }
