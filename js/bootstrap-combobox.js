@@ -145,7 +145,7 @@
       e.stopPropagation()
       e.preventDefault()
       var val = this.$element.val();
-      if (this.forceMatch && this.matcher(val) == -1) {
+      if (this.forceMatch && (val.length == 0 || this.matcher(val) == -1)) {
         this.$element.val("")
         this.$target.val("").trigger('change')
       }
