@@ -197,4 +197,19 @@ $(function () {
         equals($input.val(), 'ab', 'input value was correctly set')
         equals($select.val(), 'ab', 'select value was correctly set')
       })
+
+      test("should clear input on blur when forcing a match and value does not exist", function() {
+        var $select = $('<select><option>aa</option></select>')
+          , $input = $select.combobox({forceMatch: true}).data('combobox').$element
+          , combobox = $select.data('combobox')
+
+        $input.val('DOES NOT EXIST')
+        combobox.lookup()
+        $input.trigger('blur')
+
+        equals($input.val(), '', 'input value was correctly set')
+        equals($select.val(), 'aa', 'select value was correctly set')
+
+        combobox.$menu.remove()
+      })
 })
