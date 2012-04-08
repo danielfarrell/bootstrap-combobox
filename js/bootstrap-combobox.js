@@ -30,6 +30,8 @@
     this.sorter = this.options.sorter || this.sorter
     this.highlighter = this.options.highlighter || this.highlighter
     this.$menu = $(this.options.menu).appendTo('body')
+    this.placeholder = this.options.placeholder || this.placeholder
+    this.$element.attr('placeholder', this.placeholder)
     this.shown = false
     this.refresh()
     this.listen()
@@ -166,6 +168,7 @@
   template: '<div class="combobox-container"><input type="text" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
+  , placeholder: null
   }
 
   $.fn.combobox.Constructor = Combobox
