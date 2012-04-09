@@ -212,4 +212,12 @@ $(function () {
 
         combobox.$menu.remove()
       })
+
+      test("should set placeholder text on the input if specified as an option", function() {
+        var $select = $('<select><option></option><option>aa</option><option selected>ab</option><option>ac</option></select>')
+          , $input = $select.combobox({placeholder: "Type something..."}).data('combobox').$element
+          , combobox = $select.data('combobox')
+
+        equals($input.attr('placeholder'), 'Type something...', 'input value was correctly set')
+      })
 })

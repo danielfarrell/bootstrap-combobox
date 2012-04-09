@@ -31,6 +31,8 @@
     this.highlighter = this.options.highlighter || this.highlighter
     this.$menu = $(this.options.menu).appendTo('body')
     this.forceMatch = this.options.forceMatch
+    this.placeholder = this.options.placeholder || this.placeholder
+    this.$element.attr('placeholder', this.placeholder)
     this.shown = false
     this.refresh()
     this.listen()
@@ -173,6 +175,7 @@
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
   , forceMatch: false
+  , placeholder: null
   }
 
   $.fn.combobox.Constructor = Combobox
