@@ -30,6 +30,7 @@
     this.sorter = this.options.sorter || this.sorter
     this.highlighter = this.options.highlighter || this.highlighter
     this.$menu = $(this.options.menu).appendTo('body')
+    this.forceMatch = this.options.forceMatch
     this.shown = false
     this.refresh()
     this.listen()
@@ -143,6 +144,11 @@
       var that = this
       e.stopPropagation()
       e.preventDefault()
+      var val = this.$element.val();
+      if (this.forceMatch && (val.length == 0 || this.matcher(val) == -1)) {
+        this.$element.val("")
+        this.$target.val("").trigger('change')
+      }
       if (this.shown) {
         setTimeout(function () { that.hide() }, 150)
       }
@@ -166,6 +172,7 @@
   template: '<div class="combobox-container"><input type="text" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
+  , forceMatch: false
   }
 
   $.fn.combobox.Constructor = Combobox
