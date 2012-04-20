@@ -81,6 +81,7 @@
       if (this.shown) {
         this.hide()
       } else {
+        this.$element.focus()
         this.lookup()
       }
     }
