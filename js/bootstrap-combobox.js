@@ -49,7 +49,7 @@
         , combobox = $(this.options.template)
       select.before(combobox)
       select.detach()
-      combobox.prepend(select)
+      combobox.append(select)
       return combobox
     }
 

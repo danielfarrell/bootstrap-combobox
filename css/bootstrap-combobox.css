@@ -78,7 +78,6 @@
   border: 0;
   padding: 0;
   margin: 0;
-  float: left;
   text-indent: -99999px;
   *text-indent: 0;
 }
