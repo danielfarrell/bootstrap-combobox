@@ -60,8 +60,8 @@
         , selected = false
       this.$target.find('option').each(function() {
         var option = $(this)
-        map[option.html()] = option.val()
-        source.push(option.html())
+        map[option.text()] = option.val()
+        source.push(option.text())
         if(option.attr('selected')) selected = option.html()
       })
       this.map = map
