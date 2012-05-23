@@ -1,5 +1,5 @@
 /* =============================================================
- * bootstrap-combobox.js v0.9.1
+ * bootstrap-combobox.js v0.9.4
  * =============================================================
  * Copyright 2012 Daniel Farrell
  *
@@ -33,6 +33,7 @@
     this.placeholder = this.options.placeholder || this.$target.attr('data-placeholder')
     this.$element.attr('placeholder', this.placeholder)
     this.shown = false
+    this.selected = false
     this.refresh()
     this.listen()
   }
@@ -67,15 +68,15 @@
       if (selected) {
         this.$element.val(selected)
         this.$container.addClass('combobox-selected')
+        this.selected = true
       }
       return source
     }
 
   , toggle: function () {
     if (this.$container.hasClass('combobox-selected')) {
-      this.$target.val('')
       this.$element.val('').focus()
-      this.$container.removeClass('combobox-selected')
+      this.clearTarget()
     } else {
       if (this.shown) {
         this.hide()
@@ -84,6 +85,12 @@
         this.lookup()
       }
     }
+  }
+
+  , clearTarget: function () {
+    this.$target.val('')
+    this.$container.removeClass('combobox-selected')
+    this.selected = false
   }
 
   , refresh: function () {
@@ -98,6 +105,7 @@
       this.$container.addClass('combobox-selected')
       this.$target.val(this.map[val])
       this.$target.trigger('change')
+      this.selected = true
       return this.hide()
     }
 
@@ -141,13 +149,45 @@
         .on('click', $.proxy(this.toggle, this))
     }
 
+  // modified typeahead function to clear on type and prevent on moving around
+  , keyup: function (e) {
+      switch(e.keyCode) {
+        case 40: // down arrow
+        case 39: // right arrow
+        case 38: // up arrow
+        case 37: // left arrow
+        case 36: // home
+        case 35: // end
+        case 16: // shift
+          break
+
+        case 9: // tab
+        case 13: // enter
+          if (!this.shown) return
+          this.select()
+          break
+
+        case 27: // escape
+          if (!this.shown) return
+          this.hide()
+          break
+
+        default:
+          this.clearTarget()
+          this.lookup()
+      }
+
+      e.stopPropagation()
+      e.preventDefault()
+  }
+
   // modified typeahead function to only hide menu if it is visible
   , blur: function (e) {
       var that = this
       e.stopPropagation()
       e.preventDefault()
-      var val = this.$element.val();
-      if (val.length == 0 || this.matcher(val) == -1) {
+      var val = this.$element.val()
+      if (!this.selected && val != "" ) {
         this.$element.val("")
         this.$target.val("").trigger('change')
       }
