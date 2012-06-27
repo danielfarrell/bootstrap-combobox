@@ -90,6 +90,7 @@
     this.$target.val('')
     this.$container.removeClass('combobox-selected')
     this.selected = false
+    this.$target.trigger('change')
   }
 
   , refresh: function () {
