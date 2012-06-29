@@ -75,8 +75,8 @@
 
   , toggle: function () {
     if (this.$container.hasClass('combobox-selected')) {
-      this.$element.val('').focus()
       this.clearTarget()
+      this.$element.val('').focus()
     } else {
       if (this.shown) {
         this.hide()
