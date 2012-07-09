@@ -122,7 +122,7 @@ $(function () {
       })
 
 
-      test("should set input and select value to selected item", function () {
+      test("should set input to selected item", function () {
         var $select = $('<select><option></option><option>aa</option><option>ab</option><option>ac</option></select>')
           , $input = $select.combobox().data('combobox').$element
           , combobox = $select.data('combobox')
@@ -133,7 +133,6 @@ $(function () {
         $(combobox.$menu.find('li')[2]).mouseover().click()
 
         equals($input.val(), 'ac', 'input value was correctly set')
-        equals($select.val(), 'ac', 'select value was correctly set')
         ok(!combobox.$menu.is(':visible'), 'the menu was hidden')
 
         combobox.$menu.remove()
@@ -167,7 +166,7 @@ $(function () {
         combobox.$menu.remove()
       })
 
-      test("should clear and focus input and select and remove class from container when button is clicked when item is selected", function () {
+      test("should clear and focus input and remove class from container when button is clicked when item is selected", function () {
         var $select = $('<select><option></option><option>aa</option><option>ab</option><option>ac</option></select>')
           , $input = $select.combobox().data('combobox').$element
           , combobox = $select.data('combobox')
@@ -178,12 +177,10 @@ $(function () {
         $(combobox.$menu.find('li')[2]).mouseover().click()
 
         equals($input.val(), 'ac', 'input value was correctly set')
-        equals($select.val(), 'ac', 'select value was correctly set')
 
         combobox.$button.mouseover().click()
 
         equals($input.val(), '', 'input value was cleared correctly')
-        equals($select.val(), '', 'select value was cleared correctly')
         // ok($input.is(":focus"), 'input has focus')
 
         combobox.$menu.remove()
@@ -198,7 +195,7 @@ $(function () {
         equals($select.val(), 'ab', 'select value was correctly set')
       })
 
-      test("should clear input on blur when value does not exist", function() {
+      test("should not clear input on blur when value does not exist in select", function() {
         var $select = $('<select><option>aa</option></select>')
           , $input = $select.combobox().data('combobox').$element
           , combobox = $select.data('combobox')
@@ -207,8 +204,7 @@ $(function () {
         combobox.lookup()
         $input.trigger('blur')
 
-        equals($input.val(), '', 'input value was correctly set')
-        equals($select.val(), 'aa', 'select value was correctly set')
+        equals($input.val(), 'DOES NOT EXIST', 'input value was correctly set')
 
         combobox.$menu.remove()
       })
