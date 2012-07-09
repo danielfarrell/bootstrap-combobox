@@ -51,6 +51,8 @@
       select.before(combobox)
       select.detach()
       combobox.append(select)
+      combobox.find('input[type=text]').attr('name', combobox.find('select').attr('name')) // Name the text field to allow for custom-entered choices
+      combobox.find('select').removeAttr('name') // Remove the name from the previous select
       return combobox
     }
 
@@ -103,8 +105,6 @@
       var val = this.$menu.find('.active').attr('data-value')
       this.$element.val(val)
       this.$container.addClass('combobox-selected')
-      this.$target.val(this.map[val])
-      this.$target.trigger('change')
       this.selected = true
       return this.hide()
     }
@@ -186,11 +186,6 @@
       var that = this
       e.stopPropagation()
       e.preventDefault()
-      var val = this.$element.val()
-      if (!this.selected && val != "" ) {
-        this.$element.val("")
-        this.$target.val("").trigger('change')
-      }
       if (this.shown) {
         setTimeout(function () { that.hide() }, 150)
       }
