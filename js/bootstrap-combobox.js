@@ -51,6 +51,8 @@
       select.before(combobox)
       select.detach()
       combobox.append(select)
+      combobox.find('.combobox-input').attr('name', combobox.find('select').attr('name')) // Name the text field to allow for custom-entered choices
+      combobox.find('select').removeAttr('name') // Remove the name from the previous select
       return combobox
     }
 
@@ -187,10 +189,6 @@
       e.stopPropagation()
       e.preventDefault()
       var val = this.$element.val()
-      if (!this.selected && val != "" ) {
-        this.$element.val("")
-        this.$target.val("").trigger('change')
-      }
       if (this.shown) {
         setTimeout(function () { that.hide() }, 150)
       }
@@ -211,7 +209,7 @@
   }
 
   $.fn.combobox.defaults = {
-  template: '<div class="combobox-container"><input type="text" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
+  template: '<div class="combobox-container"><input type="text" class="combobox-input" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
   , placeholder: null
