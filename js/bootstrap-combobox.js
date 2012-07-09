@@ -105,8 +105,6 @@
       var val = this.$menu.find('.active').attr('data-value')
       this.$element.val(val)
       this.$container.addClass('combobox-selected')
-      this.$target.val(this.map[val])
-      this.$target.trigger('change')
       this.selected = true
       return this.hide()
     }
@@ -188,7 +186,6 @@
       var that = this
       e.stopPropagation()
       e.preventDefault()
-      var val = this.$element.val()
       if (this.shown) {
         setTimeout(function () { that.hide() }, 150)
       }
