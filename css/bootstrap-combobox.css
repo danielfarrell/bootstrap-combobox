@@ -81,6 +81,16 @@
   text-indent: -99999px;
   *text-indent: 0;
 }
+.form-search .combobox-container,
+.form-inline .combobox-container {
+  display: inline-block;
+  margin-bottom: 0;
+  vertical-align: top;
+}
+.form-search .combobox-container .add-on,
+.form-inline .combobox-container .add-on {
+  vertical-align: middle;
+}
 .combobox-selected .combobox-clear {
   display: inline-block;
 }
