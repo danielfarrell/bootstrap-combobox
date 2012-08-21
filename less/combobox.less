@@ -1,14 +1,10 @@
 .combobox-container {
   .input-append();
   select {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    text-indent: -99999px;
-    *text-indent: 0;
+    display: none;
+  }
+  .add-on {
+    border-radius: 0 3px 3px 0;
   }
 }
 
@@ -17,11 +13,12 @@
   display: inline-block;
   margin-bottom: 0;
   vertical-align: top;
-}
-
-.form-search .combobox-container .add-on,
-.form-inline .combobox-container .add-on {
-  vertical-align: middle;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .combobox-selected {
