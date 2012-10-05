@@ -203,9 +203,9 @@
   $.fn.combobox = function ( option ) {
     return this.each(function () {
       var $this = $(this)
-        , data
+        , data = $this.data('combobox')
         , options = typeof option == 'object' && option
-      $this.data('combobox', (data = new Combobox(this, options)))
+      if(!data) $this.data('combobox', (data = new Combobox(this, options)))
       if (typeof option == 'string') data[option]()
     })
   }
