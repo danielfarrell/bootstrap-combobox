@@ -219,4 +219,4 @@
 
   $.fn.combobox.Constructor = Combobox
 
-}( window.jQuery )
+}( window.jQuery );
