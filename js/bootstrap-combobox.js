@@ -174,6 +174,7 @@
 
         default:
           this.clearTarget()
+          this.refresh()
           this.lookup()
       }
 
