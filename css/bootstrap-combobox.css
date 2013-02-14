@@ -26,14 +26,13 @@
 }
 .combobox-container .add-on {
   float: left;
-  display: block;
+  display: inline-block;
   width: auto;
   min-width: 16px;
-  height: 18px;
+  height: inherit !important;
   margin-right: -1px;
   padding: 4px 5px;
   font-weight: normal;
-  line-height: 18px;
   color: #999999;
   text-align: center;
   text-shadow: 0 1px 0 #ffffff;
@@ -42,6 +41,7 @@
   -webkit-border-radius: 3px 0 0 3px;
   -moz-border-radius: 3px 0 0 3px;
   border-radius: 3px 0 0 3px;
+  
 }
 .combobox-container .active {
   background-color: #a9dba9;
@@ -144,4 +144,7 @@
 }
 .control-group.success .combobox-container .caret {
   border-top-color: #468847;
+}
+.btn .combobox-clear [class^="icon-"] {
+  line-height: 1.4em;
 }
