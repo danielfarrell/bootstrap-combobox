@@ -1,5 +1,5 @@
 /* =============================================================
- * bootstrap-combobox.js v1.0.0
+ * bootstrap-combobox.js v1.0.1
  * =============================================================
  * Copyright 2012 Daniel Farrell
  *
@@ -81,6 +81,7 @@
       if (this.shown) {
         this.hide()
       } else {
+        this.$element.val('').focus()
         this.lookup()
       }
     }
