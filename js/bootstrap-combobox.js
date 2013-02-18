@@ -1,5 +1,5 @@
 /* =============================================================
- * bootstrap-combobox.js v1.0.2
+ * bootstrap-combobox.js v1.0.3
  * =============================================================
  * Copyright 2012 Daniel Farrell
  *
@@ -138,7 +138,7 @@
         .on('keypress', $.proxy(this.keypress, this))
         .on('keyup',    $.proxy(this.keyup, this))
 
-      if ($.browser.webkit || $.browser.msie) {
+      if (this.eventSupported('keydown')) {
         this.$element.on('keydown', $.proxy(this.keypress, this))
       }
 
