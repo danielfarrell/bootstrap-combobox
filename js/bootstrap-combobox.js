@@ -31,7 +31,7 @@
     this.sorter = this.options.sorter || this.sorter
     this.highlighter = this.options.highlighter || this.highlighter
     this.$menu = $(this.options.menu).appendTo('body')
-    this.placeholder = this.options.placeholder || this.$target.attr('data-placeholder')
+    this.placeholder = this.options.placeholder || this.$source.attr('data-placeholder')
     this.$element.attr('placeholder', this.placeholder)
     this.$target.prop("name", this.$source.prop("name"))
     this.shown = false
