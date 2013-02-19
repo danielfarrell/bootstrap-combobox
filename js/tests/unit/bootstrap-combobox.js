@@ -33,6 +33,8 @@ $(function () {
         } else {
           ok($._data($input[0], 'events').keydown, 'does not have a keydown event')
         }
+
+        combobox.$menu.remove()
       })
 
       test("should listen to an button", function () {
@@ -55,7 +57,7 @@ $(function () {
       })
 
       test("should show menu when query entered", function () {
-        var $select = $('<select><option></option><option value="aa">aa</option><option value="ab">ab</option><option value="ac">ac</option></select>')
+        var $select = $('<select><option></option><option value="aa">aa</option><option value="ab">ab</option><option value="ac">ac</option></select>').appendTo('body')
           , $input = $select.combobox().data('combobox').$element
           , combobox = $select.data('combobox')
 
@@ -67,11 +69,13 @@ $(function () {
         equal(combobox.$menu.find('.active').length, 1, 'one item is active')
 
         combobox.$menu.remove()
+        $select.remove()
+        combobox.$container.remove()
       })
 
       test("should hide menu when query entered", function () {
         stop()
-        var $select = $('<select><option></option><option value="aa">aa</option><option value="ab">ab</option><option value="ac">ac</option></select>')
+        var $select = $('<select><option></option><option value="aa">aa</option><option value="ab">ab</option><option value="ac">ac</option></select>').appendTo('body')
           , $input = $select.combobox().data('combobox').$element
           , combobox = $select.data('combobox')
 
@@ -90,10 +94,12 @@ $(function () {
         }, 200)
 
         combobox.$menu.remove()
+        $select.remove()
+        combobox.$container.remove()
       })
 
       test("should set next item when down arrow is pressed", function () {
-        var $select = $('<select><option></option><option>aa</option><option>ab</option><option>ac</option></select>')
+        var $select = $('<select><option></option><option>aa</option><option>ab</option><option>ac</option></select>').appendTo('body')
           , $input = $select.combobox().data('combobox').$element
           , combobox = $select.data('combobox')
 
@@ -121,11 +127,13 @@ $(function () {
         ok(combobox.$menu.find('li').first().hasClass('active'), "first item is active")
 
         combobox.$menu.remove()
+        $select.remove()
+        combobox.$container.remove()
       })
 
 
       test("should set input and select value to selected item", function () {
-        var $select = $('<select><option></option><option>aa</option><option>ab</option><option>ac</option></select>')
+        var $select = $('<select><option></option><option>aa</option><option>ab</option><option>ac</option></select>').appendTo('body')
           , combobox = $select.combobox().data('combobox')
           , $input = combobox.$element
           , $target = combobox.$target
@@ -141,10 +149,12 @@ $(function () {
         ok(!combobox.$menu.is(':visible'), 'the menu was hidden')
 
         combobox.$menu.remove()
+        $select.remove()
+        combobox.$container.remove()
       })
 
       test("should show menu when no item is selected and button is clicked", function () {
-        var $select = $('<select><option></option><option>aa</option><option>ab</option><option>ac</option></select>')
+        var $select = $('<select><option></option><option>aa</option><option>ab</option><option>ac</option></select>').appendTo('body')
           , $button = $select.combobox().data('combobox').$button
           , combobox = $select.data('combobox')
 
@@ -155,6 +165,8 @@ $(function () {
         equal(combobox.$menu.find('.active').length, 1, 'one item is active')
 
         combobox.$menu.remove()
+        $select.remove()
+        combobox.$container.remove()
       })
 
       test("should add class to container when an item is selected", function () {
@@ -168,6 +180,7 @@ $(function () {
         $(combobox.$menu.find('li')[2]).mouseover().click()
 
         ok(combobox.$container.hasClass('combobox-selected'), 'container has selected class')
+
         combobox.$menu.remove()
       })
 
@@ -224,6 +237,8 @@ $(function () {
           , combobox = $select.data('combobox')
 
         equal($input.attr('placeholder'), 'Type something...', 'input value was correctly set')
+
+        combobox.$menu.remove()
       })
 
       test("should set placeholder text on the input if specified as an data attribute", function() {
@@ -232,5 +247,7 @@ $(function () {
           , combobox = $select.data('combobox')
 
         equal($input.attr('placeholder'), 'Type something...', 'input value was correctly set')
+
+        combobox.$menu.remove()
       })
 })
