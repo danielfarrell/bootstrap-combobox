@@ -27,16 +27,14 @@
     this.$element = this.$container.find('input[type=text]')
     this.$target = this.$container.find('input[type=hidden]')
     this.$button = this.$container.find('.dropdown-toggle')
+    this.$menu = $(this.options.menu).appendTo('body')
     this.matcher = this.options.matcher || this.matcher
     this.sorter = this.options.sorter || this.sorter
     this.highlighter = this.options.highlighter || this.highlighter
-    this.$menu = $(this.options.menu).appendTo('body')
-    this.placeholder = this.options.placeholder || this.$source.attr('data-placeholder')
-    this.$element.attr('placeholder', this.placeholder)
-    this.$target.prop("name", this.$source.prop("name"))
     this.shown = false
     this.selected = false
     this.refresh()
+    this.transferAttributes()
     this.listen()
   }
 
@@ -55,12 +53,16 @@
     }
 
   , parse: function () {
-      var map = {}
+      var that = this
+        , map = {}
         , source = []
         , selected = false
       this.$source.find('option').each(function() {
         var option = $(this)
-        if (option.val() == "") return
+        if (option.val() == "") {
+          that.options.placeholder = option.text()
+          return
+        }
         map[option.text()] = option.val()
         source.push(option.text())
         if(option.attr('selected')) selected = option.html()
@@ -73,6 +75,14 @@
       }
       return source
     }
+
+  , transferAttributes: function() {
+    this.options.placeholder = this.$source.attr('data-placeholder') || this.options.placeholder
+    this.$element.attr('placeholder', this.options.placeholder)
+    this.$target.prop("name", this.$source.prop("name"))
+    this.$element.attr('required', this.$source.attr('required'))
+    this.$element.attr('class', this.$source.attr('class'))
+  }
 
   , toggle: function () {
     if (this.$container.hasClass('combobox-selected')) {
@@ -210,7 +220,6 @@
   template: '<div class="combobox-container"><input type="hidden" /><input type="text" autocomplete="off" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
-  , placeholder: null
   }
 
   $.fn.combobox.Constructor = Combobox

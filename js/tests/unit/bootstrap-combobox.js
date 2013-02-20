@@ -231,12 +231,12 @@ $(function () {
         combobox.$menu.remove()
       })
 
-      test("should set placeholder text on the input if specified as an option", function() {
-        var $select = $('<select><option></option><option>aa</option><option selected>ab</option><option>ac</option></select>')
-          , $input = $select.combobox({placeholder: "Type something..."}).data('combobox').$element
+      test("should set placeholder text on the input if specified text of no value option", function() {
+        var $select = $('<select><option value="">Pick One</option><option value="aa">aa</option><option value="ab">ab</option><option value="ac">ac</option></select>')
+          , $input = $select.combobox().data('combobox').$element
           , combobox = $select.data('combobox')
 
-        equal($input.attr('placeholder'), 'Type something...', 'input value was correctly set')
+        equal($input.attr('placeholder'), 'Pick One', 'input value was correctly set')
 
         combobox.$menu.remove()
       })
@@ -247,6 +247,26 @@ $(function () {
           , combobox = $select.data('combobox')
 
         equal($input.attr('placeholder'), 'Type something...', 'input value was correctly set')
+
+        combobox.$menu.remove()
+      })
+
+      test("should set required attribute the input if specified on the select", function() {
+        var $select = $('<select required="required"><option></option><option>aa</option><option selected>ab</option><option>ac</option></select>')
+          , $input = $select.combobox().data('combobox').$element
+          , combobox = $select.data('combobox')
+
+        equal($input.attr('required'), 'required', 'required was correctly set')
+
+        combobox.$menu.remove()
+      })
+
+      test("should copy classes to the input if specified on the select", function() {
+        var $select = $('<select class="input-small"><option></option><option>aa</option><option selected>ab</option><option>ac</option></select>')
+          , $input = $select.combobox().data('combobox').$element
+          , combobox = $select.data('combobox')
+
+        equal($input.attr('class'), 'input-small', 'class was correctly set')
 
         combobox.$menu.remove()
       })
