@@ -81,6 +81,8 @@
     this.$element.attr('placeholder', this.options.placeholder)
     this.$target.prop("name", this.$source.prop("name"))
     this.$element.attr('required', this.$source.attr('required'))
+    this.$element.attr('rel', this.$source.attr('rel'))
+    this.$element.attr('title', this.$source.attr('title'))
     this.$element.attr('class', this.$source.attr('class'))
   }
 

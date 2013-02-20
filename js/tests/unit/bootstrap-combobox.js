@@ -270,4 +270,24 @@ $(function () {
 
         combobox.$menu.remove()
       })
+
+      test("should copy rel attribute to the input if specified on the select", function() {
+        var $select = $('<select rel="tooltip"><option></option><option>aa</option><option selected>ab</option><option>ac</option></select>')
+          , $input = $select.combobox().data('combobox').$element
+          , combobox = $select.data('combobox')
+
+        equal($input.attr('rel'), 'tooltip', 'rel was correctly set')
+
+        combobox.$menu.remove()
+      })
+
+      test("should copy title attribute to the input if specified on the select", function() {
+        var $select = $('<select title="A title"><option></option><option>aa</option><option selected>ab</option><option>ac</option></select>')
+          , $input = $select.combobox().data('combobox').$element
+          , combobox = $select.data('combobox')
+
+        equal($input.attr('title'), 'A title', 'title was correctly set')
+
+        combobox.$menu.remove()
+      })
 })
