@@ -59,7 +59,7 @@
         , selected = false
       this.$source.find('option').each(function() {
         var option = $(this)
-        if (option.val() == "") {
+        if (option.val() == '') {
           that.options.placeholder = option.text()
           return
         }
@@ -79,7 +79,7 @@
   , transferAttributes: function() {
     this.options.placeholder = this.$source.attr('data-placeholder') || this.options.placeholder
     this.$element.attr('placeholder', this.options.placeholder)
-    this.$target.prop("name", this.$source.prop("name"))
+    this.$target.prop('name', this.$source.prop('name'))
     this.$element.attr('required', this.$source.attr('required'))
     this.$element.attr('rel', this.$source.attr('rel'))
     this.$element.attr('title', this.$source.attr('title'))
@@ -101,10 +101,10 @@
   }
 
   , clearTarget: function () {
-    this.$target.val('')
+    this.$source.val('').trigger('change')
+    this.$target.val('').trigger('change')
     this.$container.removeClass('combobox-selected')
     this.selected = false
-    this.$target.trigger('change')
   }
 
   , refresh: function () {
@@ -115,12 +115,10 @@
   // modified typeahead function adding container and target handling
   , select: function () {
       var val = this.$menu.find('.active').attr('data-value')
-      this.$element
-        .val(this.updater(val))
-        .change()
+      this.$element.val(this.updater(val)).trigger('change')
+      this.$source.val(this.map[val]).trigger('change')
+      this.$target.val(this.map[val]).trigger('change')
       this.$container.addClass('combobox-selected')
-      this.$target.val(this.map[val])
-      this.$target.trigger('change')
       this.selected = true
       return this.hide()
     }
@@ -128,7 +126,6 @@
   // modified typeahead function removing the blank handling and source function handling
   , lookup: function (event) {
       this.query = this.$element.val()
-
       return this.process(this.source)
     }
 
@@ -192,9 +189,10 @@
       var that = this
       this.focused = false
       var val = this.$element.val()
-      if (!this.selected && val != "" ) {
-        this.$element.val("")
-        this.$target.val("").trigger('change')
+      if (!this.selected && val != '' ) {
+        this.$element.val('')
+        this.$source.val('').trigger('change')
+        this.$target.val('').trigger('change')
       }
       if (!this.mousedover && this.shown) setTimeout(function () { that.hide() }, 200)
     }
