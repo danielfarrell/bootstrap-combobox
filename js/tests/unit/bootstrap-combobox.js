@@ -136,6 +136,7 @@ $(function () {
         var $select = $('<select><option></option><option>aa</option><option>ab</option><option>ac</option></select>').appendTo('body')
           , combobox = $select.combobox().data('combobox')
           , $input = combobox.$element
+          , $source = combobox.$source
           , $target = combobox.$target
           
 
@@ -145,7 +146,8 @@ $(function () {
         $(combobox.$menu.find('li')[2]).mouseover().click()
 
         equal($input.val(), 'ac', 'input value was correctly set')
-        equal($target.val(), 'ac', 'select value was correctly set')
+        equal($source.val(), 'ac', 'select value was correctly set')
+        equal($target.val(), 'ac', 'hidden field value was correctly set')
         ok(!combobox.$menu.is(':visible'), 'the menu was hidden')
 
         combobox.$menu.remove()
@@ -188,6 +190,7 @@ $(function () {
         var $select = $('<select><option></option><option>aa</option><option>ab</option><option>ac</option></select>')
           , combobox = $select.combobox().data('combobox')
           , $input = combobox.$element
+          , $source = combobox.$source
           , $target = combobox.$target
 
         $input.val('a')
@@ -196,7 +199,8 @@ $(function () {
         $(combobox.$menu.find('li')[2]).mouseover().click()
 
         equal($input.val(), 'ac', 'input value was correctly set')
-        equal($target.val(), 'ac', 'select value was correctly set')
+        equal($source.val(), 'ac', 'select value was correctly set'))
+        equal($target.val(), 'ac', 'hidden field value was correctly set')
 
         combobox.$button.mouseover().click()
 
