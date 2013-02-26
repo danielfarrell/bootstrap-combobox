@@ -89,22 +89,31 @@
   , toggle: function () {
     if (this.$container.hasClass('combobox-selected')) {
       this.clearTarget()
-      this.$element.val('').focus()
+      this.triggerChange()
+      this.clearElement()
     } else {
       if (this.shown) {
         this.hide()
       } else {
-        this.$element.val('').focus()
+        this.clearElement()
         this.lookup()
       }
     }
   }
 
+  , clearElement: function () {
+    this.$element.val('').focus()
+  }
+
   , clearTarget: function () {
-    this.$source.val('').trigger('change')
-    this.$target.val('').trigger('change')
+    this.$source.val('')
+    this.$target.val('')
     this.$container.removeClass('combobox-selected')
     this.selected = false
+  }
+
+  , triggerChange: function () {
+    this.$source.trigger('change')
   }
 
   , refresh: function () {
