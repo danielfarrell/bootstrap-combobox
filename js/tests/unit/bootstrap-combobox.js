@@ -199,7 +199,7 @@ $(function () {
         $(combobox.$menu.find('li')[2]).mouseover().click()
 
         equal($input.val(), 'ac', 'input value was correctly set')
-        equal($source.val(), 'ac', 'select value was correctly set'))
+        equal($source.val(), 'ac', 'select value was correctly set')
         equal($target.val(), 'ac', 'hidden field value was correctly set')
 
         combobox.$button.mouseover().click()
