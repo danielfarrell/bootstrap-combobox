@@ -32,6 +32,7 @@
     this.$menu = $(this.options.menu).appendTo('body')
     this.placeholder = this.options.placeholder || this.$target.attr('data-placeholder')
     this.$element.attr('placeholder', this.placeholder)
+    this.$element.attr('class', this.$target.attr('class'));
     this.shown = false
     this.selected = false
     this.refresh()
