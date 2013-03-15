@@ -1,5 +1,5 @@
 /* =============================================================
- * bootstrap-combobox.js v1.1.0
+ * bootstrap-combobox.js v1.1.1
  * =============================================================
  * Copyright 2012 Daniel Farrell
  *
@@ -18,7 +18,7 @@
 
 !function( $ ) {
 
- "use strict"
+ "use strict";
 
   var Combobox = function ( element, options ) {
     this.options = $.extend({}, $.fn.combobox.defaults, options)
@@ -59,7 +59,7 @@
         , selected = false
       this.$source.find('option').each(function() {
         var option = $(this)
-        if (option.val() == '') {
+        if (option.val() === '') {
           that.options.placeholder = option.text()
           return
         }
@@ -199,7 +199,7 @@
       var that = this
       this.focused = false
       var val = this.$element.val()
-      if (!this.selected && val != '' ) {
+      if (!this.selected && val !== '' ) {
         this.$element.val('')
         this.$source.val('').trigger('change')
         this.$target.val('').trigger('change')
