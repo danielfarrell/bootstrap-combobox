@@ -80,7 +80,7 @@
     this.options.placeholder = this.$source.attr('data-placeholder') || this.options.placeholder
     this.$element.attr('placeholder', this.options.placeholder)
     this.$target.prop('name', this.$source.prop('name'))
-    this.$target.prop('value', this.$source.val())
+    this.$target.val(this.$source.val())
     this.$source.removeAttr('name')  // Remove from source otherwise form will pass parameter twice.
     this.$element.attr('required', this.$source.attr('required'))
     this.$element.attr('rel', this.$source.attr('rel'))
