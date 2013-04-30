@@ -47,6 +47,12 @@
 
   , setup: function () {
       var combobox = $(this.options.template)
+      
+      if (this.options.dropdown) {
+        $('.combobox-clear', combobox).remove()
+        $('.dropdown-toggle > span', combobox).css('display', 'inline-block')
+      }
+      
       this.$source.before(combobox)
       this.$source.hide()
       return combobox
@@ -89,7 +95,7 @@
   }
 
   , toggle: function () {
-    if (this.$container.hasClass('combobox-selected')) {
+    if (this.$container.hasClass('combobox-selected') && !this.options.dropdown) {
       this.clearTarget()
       this.triggerChange()
       this.clearElement()
@@ -231,6 +237,7 @@
   template: '<div class="combobox-container"><input type="hidden" /><input type="text" autocomplete="off" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
+  , dropdown: false
   }
 
   $.fn.combobox.Constructor = Combobox
