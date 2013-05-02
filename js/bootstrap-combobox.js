@@ -53,6 +53,13 @@
         $('.dropdown-toggle > span', combobox).css('display', 'inline-block')
       }
       
+      if (this.options.disableTypeahead) {
+        $('input[type=text]', combobox).attr('disabled', 'disabled').css({
+          backgroundColor: 'transparent',
+          cursor: 'default'
+        })
+      }
+      
       this.$source.before(combobox)
       this.$source.hide()
       return combobox
@@ -103,7 +110,9 @@
       if (this.shown) {
         this.hide()
       } else {
-        this.clearElement()
+        if (!this.options.disableTypeahead) {
+          this.clearElement()
+        }
         this.lookup()
       }
     }
@@ -142,7 +151,11 @@
 
   // modified typeahead function removing the blank handling and source function handling
   , lookup: function (event) {
-      this.query = this.$element.val()
+      if (!this.options.disableTypeahead) {
+        this.query = this.$element.val()
+      } else {
+        this.query = ''
+      }
       return this.process(this.source)
     }
 
@@ -238,6 +251,7 @@
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
   , dropdown: false
+  , disableTypeahead: false
   }
 
   $.fn.combobox.Constructor = Combobox
