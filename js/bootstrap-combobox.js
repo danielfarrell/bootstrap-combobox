@@ -200,7 +200,7 @@
       var that = this
       this.focused = false
       var val = this.$element.val()
-      if (!this.selected && val !== '' ) {
+      if (!!this.options.force_match && !this.selected && val !== '' ) {
         this.$element.val('')
         this.$source.val('').trigger('change')
         this.$target.val('').trigger('change')
@@ -231,6 +231,7 @@
   template: '<div class="combobox-container"><input type="hidden" /><input type="text" autocomplete="off" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
+  , force_match: true
   }
 
   $.fn.combobox.Constructor = Combobox
