@@ -200,10 +200,14 @@
       var that = this
       this.focused = false
       var val = this.$element.val()
-      if (!!this.options.force_match && !this.selected && val !== '' ) {
-        this.$element.val('')
-        this.$source.val('').trigger('change')
-        this.$target.val('').trigger('change')
+      if (!!this.options.force_match) {
+          if ( !this.selected && val !== '' ) {
+              this.$element.val('')
+              this.$source.val('').trigger('change')
+              this.$target.val('').trigger('change')
+          }
+      } else {
+          this.$target.val(val).trigger('change')
       }
       if (!this.mousedover && this.shown) setTimeout(function () { that.hide() }, 200)
     }
