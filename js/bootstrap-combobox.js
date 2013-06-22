@@ -86,6 +86,8 @@
     this.$element.attr('rel', this.$source.attr('rel'))
     this.$element.attr('title', this.$source.attr('title'))
     this.$element.attr('class', this.$source.attr('class'))
+    this.$element.attr('tabindex', this.$source.attr('tabindex'))
+    this.$source.removeAttr('tabindex')
   }
 
   , toggle: function () {
