@@ -65,7 +65,7 @@
         }
         map[option.text()] = option.val()
         source.push(option.text())
-        if(option.attr('selected')) selected = option.html()
+        if(option.attr('selected')) selected = option.text()
       })
       this.map = map
       if (selected) {
