@@ -202,10 +202,14 @@
       var that = this
       this.focused = false
       var val = this.$element.val()
-      if (!this.selected && val !== '' ) {
-        this.$element.val('')
-        this.$source.val('').trigger('change')
-        this.$target.val('').trigger('change')
+      if (!!this.options.force_match) {
+          if ( !this.selected && val !== '' ) {
+              this.$element.val('')
+              this.$source.val('').trigger('change')
+              this.$target.val('').trigger('change')
+          }
+      } else {
+          this.$target.val(val).trigger('change')
       }
       if (!this.mousedover && this.shown) setTimeout(function () { that.hide() }, 200)
     }
@@ -233,6 +237,7 @@
   template: '<div class="combobox-container"><input type="hidden" /><input type="text" autocomplete="off" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
+  , force_match: true
   }
 
   $.fn.combobox.Constructor = Combobox
