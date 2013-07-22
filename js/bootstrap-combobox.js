@@ -214,18 +214,40 @@
   , mouseleave: function (e) {
       this.mousedover = false
     }
+
+  , update: function(v) {
+      var that = this;
+
+      this.clearTarget();
+      this.clearElement();
+
+      $.each(this.map, function(val, key) {
+        if (key == v) {
+
+          that.$element.val(val).trigger('change')
+          that.$source.val(key).trigger('change')
+          that.$target.val(key).trigger('change')
+          that.$container.addClass('combobox-selected')
+          that.selected = true
+          that.hide()
+
+          return false;
+        }
+      });
+    }
+
   })
 
   /* COMBOBOX PLUGIN DEFINITION
    * =========================== */
 
-  $.fn.combobox = function ( option ) {
+  $.fn.combobox = function ( option, param ) {
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('combobox')
         , options = typeof option == 'object' && option
       if(!data) $this.data('combobox', (data = new Combobox(this, options)))
-      if (typeof option == 'string') data[option]()
+      if (typeof option == 'string') data[option](param)
     })
   }
 
