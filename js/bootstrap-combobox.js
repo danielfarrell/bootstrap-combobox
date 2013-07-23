@@ -209,7 +209,7 @@
               this.$target.val('').trigger('change')
           }
       } else {
-          this.$target.val(val).trigger('change')
+          this.select();
       }
       if (!this.mousedover && this.shown) setTimeout(function () { that.hide() }, 200)
     }
