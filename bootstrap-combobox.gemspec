@@ -4,14 +4,16 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'fileutils'
 require 'bootstrap-combobox/version'
 
+FileUtils.rm_rf('vendor')
+
 %w{vendor vendor/assets vendor/assets/javascripts vendor/assets/stylesheets }.each do |path|
   file = File.join(path.split('/'))
-  Dir.mkdir(file) unless Dir.exist?(file)
+  Dir.mkdir(file)
 end
 
 [[File.join(%w{css bootstrap-combobox.css}), File.join(%w{vendor assets stylesheets bootstrap-combobox.css})],
   [File.join(%w{js bootstrap-combobox.js}), File.join(%w{vendor assets javascripts bootstrap-combobox.js})]].each do |pair|
-  FileUtils.cp(pair[0], pair[1]) unless File.exist? pair[1]
+  FileUtils.cp(pair[0], pair[1])
 end 
 
 Gem::Specification.new do |gem|
