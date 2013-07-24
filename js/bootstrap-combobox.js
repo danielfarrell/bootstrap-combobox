@@ -1,5 +1,6 @@
 /* =============================================================
- * bootstrap-combobox.js v1.2.3
+ * bootstrap-combobox.js v1.2.5
+ * If you update the version here, please also update it in version.rb
  * =============================================================
  * Copyright 2012 Daniel Farrell
  *
