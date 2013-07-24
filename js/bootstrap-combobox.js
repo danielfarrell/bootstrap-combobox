@@ -1,5 +1,5 @@
 /* =============================================================
- * bootstrap-combobox.js v1.2.1
+ * bootstrap-combobox.js v1.2.3
  * =============================================================
  * Copyright 2012 Daniel Farrell
  *
@@ -29,6 +29,7 @@
     this.$button = this.$container.find('.dropdown-toggle')
     this.$menu = $(this.options.menu).appendTo('body')
     this.matcher = this.options.matcher || this.matcher
+    this.updater = this.options.updater || this.updater
     this.sorter = this.options.sorter || this.sorter
     this.highlighter = this.options.highlighter || this.highlighter
     this.shown = false
@@ -46,6 +47,7 @@
     constructor: Combobox
 
   , setup: function () {
+      console.log('setup')
       var combobox = $(this.options.template)
       this.$source.before(combobox)
       this.$source.hide()
@@ -53,6 +55,7 @@
     }
 
   , parse: function () {
+      console.log('parse')
       var that = this
         , map = {}
         , source = []
@@ -77,6 +80,7 @@
     }
 
   , transferAttributes: function() {
+      console.log('transferAttributes')
     this.options.placeholder = this.$source.attr('data-placeholder') || this.options.placeholder
     this.$element.attr('placeholder', this.options.placeholder)
     this.$target.prop('name', this.$source.prop('name'))
@@ -91,6 +95,7 @@
   }
 
   , toggle: function () {
+      console.log('toggle')
     if (this.$container.hasClass('combobox-selected')) {
       this.clearTarget()
       this.triggerChange()
@@ -106,10 +111,12 @@
   }
 
   , clearElement: function () {
+      console.log('clearElement')
     this.$element.val('').focus()
   }
 
   , clearTarget: function () {
+      console.log('clearTarget')
     this.$source.val('')
     this.$target.val('')
     this.$container.removeClass('combobox-selected')
@@ -117,20 +124,30 @@
   }
 
   , triggerChange: function () {
+      console.log('triggerChagne')
     this.$source.trigger('change')
   }
 
   , refresh: function () {
+      console.log('refresh')
     this.source = this.parse()
     this.options.items = this.source.length
   }
 
   // modified typeahead function adding container and target handling
   , select: function () {
+      console.log('select')
       var val = this.$menu.find('.active').attr('data-value')
+      console.log('in select, val is: ' + val + ' this.query is ' + this.query)
+      var mapped_val = this.map[val]
+      if (!this.options.force_match  && this.query != '' && !this.matcher(val)) {
+        val = this.query
+        this.$menu.find('.active').removeClass('active')
+        mapped_val = val
+      }
       this.$element.val(this.updater(val)).trigger('change')
-      this.$source.val(this.map[val]).trigger('change')
-      this.$target.val(this.map[val]).trigger('change')
+      this.$source.val(mapped_val).trigger('change')
+      this.$target.val(mapped_val).trigger('change')
       this.$container.addClass('combobox-selected')
       this.selected = true
       return this.hide()
@@ -138,12 +155,14 @@
 
   // modified typeahead function removing the blank handling and source function handling
   , lookup: function (event) {
+      console.log('lookup')
       this.query = this.$element.val()
       return this.process(this.source)
     }
 
   // modified typeahead function adding button handling and remove mouseleave
   , listen: function () {
+      console.log('listen')
       this.$element
         .on('focus',    $.proxy(this.focus, this))
         .on('blur',     $.proxy(this.blur, this))
@@ -165,6 +184,7 @@
 
   // modified typeahead function to clear on type and prevent on moving around
   , keyup: function (e) {
+      console.log('keyup')
       switch(e.keyCode) {
         case 40: // down arrow
         case 39: // right arrow
@@ -199,6 +219,7 @@
 
   // modified typeahead function to force a match and add a delay on hide
   , blur: function (e) {
+      console.log('blur')
       var that = this
       this.focused = false
       var val = this.$element.val()
@@ -216,6 +237,7 @@
 
   // modified typeahead function to not hide
   , mouseleave: function (e) {
+      console.log('mouseleave')
       this.mousedover = false
     }
   })
