@@ -1,5 +1,6 @@
 /* =============================================================
- * bootstrap-combobox.js v1.1.3
+ * bootstrap-combobox.js v1.2.5
+ * If you update the version here, please also update it in version.rb
  * =============================================================
  * Copyright 2012 Daniel Farrell
  *
@@ -29,6 +30,7 @@
     this.$button = this.$container.find('.dropdown-toggle')
     this.$menu = $(this.options.menu).appendTo('body')
     this.matcher = this.options.matcher || this.matcher
+    this.updater = this.options.updater || this.updater
     this.sorter = this.options.sorter || this.sorter
     this.highlighter = this.options.highlighter || this.highlighter
     this.shown = false
@@ -128,9 +130,15 @@
   // modified typeahead function adding container and target handling
   , select: function () {
       var val = this.$menu.find('.active').attr('data-value')
+      var mapped_val = this.map[val]
+      if (!this.options.force_match  && this.query != '' && !this.matcher(val)) {
+        val = this.query
+        this.$menu.find('.active').removeClass('active')
+        mapped_val = val
+      }
       this.$element.val(this.updater(val)).trigger('change')
-      this.$source.val(this.map[val]).trigger('change')
-      this.$target.val(this.map[val]).trigger('change')
+      this.$source.val(mapped_val).trigger('change')
+      this.$target.val(mapped_val).trigger('change')
       this.$container.addClass('combobox-selected')
       this.selected = true
       return this.hide()
@@ -202,10 +210,14 @@
       var that = this
       this.focused = false
       var val = this.$element.val()
-      if (!this.selected && val !== '' ) {
-        this.$element.val('')
-        this.$source.val('').trigger('change')
-        this.$target.val('').trigger('change')
+      if (!!this.options.force_match) {
+          if ( !this.selected && val !== '' ) {
+              this.$element.val('')
+              this.$source.val('').trigger('change')
+              this.$target.val('').trigger('change')
+          }
+      } else {
+          this.select();
       }
       if (!this.mousedover && this.shown) setTimeout(function () { that.hide() }, 200)
     }
@@ -233,6 +245,7 @@
   template: '<div class="combobox-container"><input type="hidden" /><input type="text" autocomplete="off" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
+  , force_match: true
   }
 
   $.fn.combobox.Constructor = Combobox

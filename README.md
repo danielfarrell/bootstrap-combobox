@@ -26,3 +26,7 @@ Then just activate the plugin on a normal select box(suggest having a blank opti
 ## Live Example
 
 http://dl.dropbox.com/u/21368/bootstrap-combobox/index.html
+
+## Ruby
+
+This is published/publishable as a ruby gem as well.
