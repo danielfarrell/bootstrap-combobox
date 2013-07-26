@@ -1,5 +1,5 @@
 /* =============================================================
- * bootstrap-combobox.js v1.1.3
+ * bootstrap-combobox.js v1.1.4
  * =============================================================
  * Copyright 2012 Daniel Farrell
  *
@@ -57,6 +57,7 @@
         , map = {}
         , source = []
         , selected = false
+        , selectedValue = ''
       this.$source.find('option').each(function() {
         var option = $(this)
         if (option.val() === '') {
@@ -65,11 +66,15 @@
         }
         map[option.text()] = option.val()
         source.push(option.text())
-        if(option.attr('selected')) selected = option.text()
+        if (option.attr('selected')) {
+          selected = option.text()
+          selectedValue = option.val()
+        }
       })
       this.map = map
       if (selected) {
         this.$element.val(selected)
+        this.$target.val(selectedValue)
         this.$container.addClass('combobox-selected')
         this.selected = true
       }

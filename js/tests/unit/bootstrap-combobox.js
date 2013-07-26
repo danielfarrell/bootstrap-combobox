@@ -214,9 +214,11 @@ $(function () {
       test("should set as selected if select was selected before load", function () {
         var $select = $('<select><option></option><option>aa</option><option selected>ab</option><option>ac</option></select>')
           , $input = $select.combobox().data('combobox').$element
+          , $target = $select.combobox().data('combobox').$target
           , combobox = $select.data('combobox')
 
         equal($input.val(), 'ab', 'input value was correctly set')
+        equal($target.val(), 'ab', 'hidden input value was correctly set')
         equal($select.val(), 'ab', 'select value was correctly set')
       })
 
