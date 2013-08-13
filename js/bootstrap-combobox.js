@@ -93,6 +93,8 @@
     this.$element.attr('class', this.$source.attr('class'))
     this.$element.attr('tabindex', this.$source.attr('tabindex'))
     this.$source.removeAttr('tabindex')
+    this.$element.attr('disabled', this.$source.attr('disabled')!==undefined);
+    this.$button.attr('disabled', this.$source.attr('disabled')!==undefined);
   }
 
   , toggle: function () {
@@ -165,7 +167,12 @@
         .on('mouseleave', 'li', $.proxy(this.mouseleave, this))
 
       this.$button
-        .on('click', $.proxy(this.toggle, this))
+        .on('click', function(o){
+          return function(){
+            if (o.$button.attr('disabled') !== undefined) return;
+            o.toggle();
+          };
+        }(this));
     }
 
   // modified typeahead function to clear on type and prevent on moving around
