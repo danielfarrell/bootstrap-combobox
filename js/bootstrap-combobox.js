@@ -106,7 +106,7 @@
     this.$element.attr('class', this.$source.attr('class'))
     this.$element.attr('tabindex', this.$source.attr('tabindex'))
     this.$source.removeAttr('tabindex')
-    if (this.$source.attr('disabled')!==undefined)
+    if (this.$source.attr('disabled')!==undefined) //MartinBrugnara
       this.disable();
   }
 
