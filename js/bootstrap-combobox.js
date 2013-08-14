@@ -55,14 +55,12 @@
   , disable: function() { //cristiandreica
       this.$element.prop('disabled', true)
       this.$button.attr('disabled', true)
-      this.$button.off('click')
       this.disabled = true //MartinBrugnara
     }
 
   , enable: function() { //cristiandreica
       this.$element.prop('disabled', false)
       this.$button.attr('disabled', false)
-      this.$button.on('click', $.proxy(this.toggle, this))
       this.disabled = false //MartinBrugnara
     }
   , parse: function () {
