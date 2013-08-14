@@ -52,6 +52,17 @@
       return combobox
     }
 
+  , disable: function() { //cristiandreica
+      this.$element.prop('disabled', true)
+      this.$button.attr('disabled', true)
+      this.disabled = true //MartinBrugnara
+    }
+
+  , enable: function() { //cristiandreica
+      this.$element.prop('disabled', false)
+      this.$button.attr('disabled', false)
+      this.disabled = false //MartinBrugnara
+    }
   , parse: function () {
       var that = this
         , map = {}
@@ -93,6 +104,8 @@
     this.$element.attr('class', this.$source.attr('class'))
     this.$element.attr('tabindex', this.$source.attr('tabindex'))
     this.$source.removeAttr('tabindex')
+    if (this.$source.attr('disabled')!==undefined) //MartinBrugnara
+      this.disable();
   }
 
   , toggle: function () {
@@ -165,7 +178,12 @@
         .on('mouseleave', 'li', $.proxy(this.mouseleave, this))
 
       this.$button
-        .on('click', $.proxy(this.toggle, this))
+        .on('click', function(o){ //MartinBrugnara
+          return function(){
+            if (o.disabled) return;
+            o.toggle()
+          };
+        }(this))
     }
 
   // modified typeahead function to clear on type and prevent on moving around
@@ -219,25 +237,46 @@
   , mouseleave: function (e) {
       this.mousedover = false
     }
+
+  // riker09
+  , update: function(v) {
+      var that = this;
+
+      this.clearTarget();
+      this.clearElement();
+
+      $.each(this.map, function(val, key) {
+        if (key != v) 
+          return true;
+        that.$element.val(val).trigger('change')
+        that.$source.val(key).trigger('change')
+        that.$target.val(key).trigger('change')
+        that.$container.addClass('combobox-selected')
+        that.selected = true
+        that.hide()
+        return false;
+      });
+    }
   })
 
   /* COMBOBOX PLUGIN DEFINITION
    * =========================== */
-
-  $.fn.combobox = function ( option ) {
+  $.fn.combobox = function ( option, param ) { //riker09
     return this.each(function () {
+      if ($(this).is('input')) return // cristiandreica
       var $this = $(this)
         , data = $this.data('combobox')
         , options = typeof option == 'object' && option
       if(!data) $this.data('combobox', (data = new Combobox(this, options)))
-      if (typeof option == 'string') data[option]()
+      if (typeof option == 'string') data[option](param) //riker09
     })
   }
 
   $.fn.combobox.defaults = {
-  template: '<div class="combobox-container"><input type="hidden" /><input type="text" autocomplete="off" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
+  template: '<div class="combobox-container control-group input-append"><input type="hidden" /><input type="text" autocomplete="off" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
+  , disabled: false //MartinBrugnara
   }
 
   $.fn.combobox.Constructor = Combobox
