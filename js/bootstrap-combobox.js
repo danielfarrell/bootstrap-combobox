@@ -3,6 +3,13 @@
  * =============================================================
  * Copyright 2012 Daniel Farrell
  *
+ * Custom edits applied by Andrew L. Ayers to allow for user-
+ * freeform data entry option; see lines 218-228 for details. To
+ * use, call combobox on element passing json option object as
+ * follows:
+ *
+ *      $(selector).combobox({freeform: true});
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -208,9 +215,17 @@
       this.focused = false
       var val = this.$element.val()
       if (!this.selected && val !== '' ) {
-        this.$element.val('')
-        this.$source.val('').trigger('change')
-        this.$target.val('').trigger('change')
+          // only override user's data if freeform option is not set
+          if (!this.options.freeform) {
+              this.$element.val('')
+              this.$source.val('').trigger('change')
+              this.$target.val('').trigger('change')
+          }
+          else {
+              this.$source.val(val).trigger('change')
+              this.$target.val(val).trigger('change')
+              this.$container.addClass('combobox-selected')
+          }
       }
       if (!this.mousedover && this.shown) setTimeout(function () { that.hide() }, 200)
     }
