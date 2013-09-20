@@ -87,6 +87,10 @@
     this.$target.prop('name', this.$source.prop('name'))
     this.$target.val(this.$source.val())
     this.$source.removeAttr('name')  // Remove from source otherwise form will pass parameter twice.
+    if(this.options.transferId) {
+      this.$target.prop('id', this.$source.prop('id'))
+      this.$source.removeAttr('id')
+    }
     this.$element.attr('required', this.$source.attr('required'))
     this.$element.attr('rel', this.$source.attr('rel'))
     this.$element.attr('title', this.$source.attr('title'))
@@ -238,6 +242,7 @@
   template: '<div class="combobox-container"><input type="hidden" /><input type="text" autocomplete="off" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
+  , transferId: false
   }
 
   $.fn.combobox.Constructor = Combobox
