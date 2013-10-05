@@ -4,7 +4,7 @@ We had need of a combobox at work and after looking around at the available opti
 
 ## How to use it
 
-The dependencies are the Bootstrap stylesheet(CSS or LESS) and also the typeahead javascript plugin.  Include them and then the stylesheet(CSS or LESS) and javascript.
+The dependencies are the Bootstrap stylesheet(CSS or LESS).  Include it and then the stylesheet(CSS or LESS) and javascript.
 
 Then just activate the plugin on a normal select box(suggest having a blank option first):
 
@@ -26,3 +26,7 @@ Then just activate the plugin on a normal select box(suggest having a blank opti
 ## Live Example
 
 http://dl.dropbox.com/u/21368/bootstrap-combobox/index.html
+
+## License
+
+Licensed under the Apache License, Version 2.0

@@ -228,7 +228,7 @@ $(function () {
           , combobox = $select.data('combobox')
 
         $input.val('DOES NOT EXIST')
-        combobox.lookup()
+        $input.trigger('keyup')
         $input.trigger('blur')
 
         equal($input.val(), '', 'input value was correctly set')
