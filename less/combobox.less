@@ -1,17 +1,3 @@
-.combobox-container {
-  .input-append();
-  select {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border: 0;
-    padding: 0;
-    margin: 0;
-    text-indent: -99999px;
-    *text-indent: 0;
-  }
-}
-
 .form-search .combobox-container,
 .form-inline .combobox-container {
   display: inline-block;
@@ -19,45 +5,17 @@
   vertical-align: top;
 }
 
-.form-search .combobox-container .add-on,
-.form-inline .combobox-container .add-on {
-  vertical-align: middle;
-}
-
 .combobox-selected {
-  .combobox-clear {
-    display: inline-block;
-  }
   .caret {
     display: none;
   }
 }
 
-.combobox-clear {
-  display: none;
-  width: 14px;
-  height: 14px;
-  line-height: 14px;
-  vertical-align: top;
-  .opacity(30);
-}
-
-.dropdown:hover .combobox-clear,
-.open.dropdown .combobox-clear {
-  .opacity(100);
-}
-
-.btn .combobox-clear {
-  margin-top: 1px;
-  margin-left: 1px;
-}
-
-.btn .combobox-clear [class^="icon-"] {
-  line-height: 1.4em;
-}
-
-.btn:hover .combobox-clear, .open.btn-group .combobox-clear {
-  .opacity(100);
+/* :not doesn't work in IE8 */
+.combobox-container:not(.combobox-selected) {
+  .glyphicon-remove {
+    display: none;
+  }
 }
 
 .typeahead-long {
