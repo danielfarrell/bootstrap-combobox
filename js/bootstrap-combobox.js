@@ -3,13 +3,6 @@
  * =============================================================
  * Copyright 2012 Daniel Farrell
  *
- * Custom edits applied by Andrew L. Ayers to allow for user-
- * freeform data entry option; see lines 218-228 for details. To
- * use, call combobox on element passing json option object as
- * follows:
- *
- *      $(selector).combobox({freeform: true});
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -34,15 +27,18 @@
     this.$element = this.$container.find('input[type=text]')
     this.$target = this.$container.find('input[type=hidden]')
     this.$button = this.$container.find('.dropdown-toggle')
+
     this.$menu = $(this.options.menu).appendTo('body')
     this.matcher = this.options.matcher || this.matcher
     this.sorter = this.options.sorter || this.sorter
     this.highlighter = this.options.highlighter || this.highlighter
     this.shown = false
     this.selected = false
+
     this.refresh()
     this.transferAttributes()
     this.listen()
+    this.getdataval()
   }
 
   /* NOTE: COMBOBOX EXTENDS BOOTSTRAP-TYPEAHEAD.js
@@ -62,6 +58,7 @@
   , parse: function () {
       var that = this
         , map = {}
+        , mapi = {}
         , source = []
         , selected = false
         , selectedValue = ''
@@ -71,7 +68,8 @@
           that.options.placeholder = option.text()
           return
         }
-        map[option.text()] = option.val()
+        map[option.val()] = option.text()
+        mapi[option.text()] = option.val()
         source.push(option.text())
         if (option.prop('selected')) {
           selected = option.text()
@@ -79,6 +77,7 @@
         }
       })
       this.map = map
+      this.mapi = mapi
       if (selected) {
         this.$element.val(selected)
         this.$target.val(selectedValue)
@@ -97,7 +96,9 @@
     this.$element.attr('required', this.$source.attr('required'))
     this.$element.attr('rel', this.$source.attr('rel'))
     this.$element.attr('title', this.$source.attr('title'))
-    this.$element.attr('class', this.$source.attr('class'))
+    if (!this.options.freeform) {
+      this.$element.attr('class', this.$source.attr('class'))
+    }
     this.$element.attr('tabindex', this.$source.attr('tabindex'))
     this.$source.removeAttr('tabindex')
   }
@@ -107,6 +108,7 @@
       this.clearTarget()
       this.triggerChange()
       this.clearElement()
+      this.lookup()
     } else {
       if (this.shown) {
         this.hide()
@@ -118,13 +120,22 @@
   }
 
   , clearElement: function () {
-    this.$element.val('').focus()
+    if (!this.options.freeform) {
+      this.$element.val('').focus()
+    }
+    else {
+      this.$element.focus()
+    }
   }
 
   , clearTarget: function () {
     this.$source.val('')
-    this.$target.val('')
+    if (!this.options.freeform) {
+      this.$target.val('')
+    }
+
     this.$container.removeClass('combobox-selected')
+
     this.selected = false
   }
 
@@ -138,20 +149,48 @@
   }
 
   // modified typeahead function adding container and target handling
-  , select: function () {
+  , select: function (tab) {
+    if (!tab) {
       var val = this.$menu.find('.active').attr('data-value')
       this.$element.val(this.updater(val)).trigger('change')
       this.$source.val(this.map[val]).trigger('change')
       this.$target.val(this.map[val]).trigger('change')
-      this.$container.addClass('combobox-selected')
-      this.selected = true
-      return this.hide()
     }
+
+    this.$container.addClass('combobox-selected')
+
+    this.selected = (!this.options.freeform)
+
+    return this.hide()
+  }
 
   // modified typeahead function removing the blank handling and source function handling
   , lookup: function (event) {
-      this.query = this.$element.val()
+      if (!this.options.freeform) {
+        this.query = this.$element.val()
+      }
+      else {
+        this.query = this.$element.val()
+
+        var check = this.matches(this.query)
+
+        if (!check) {
+          this.query = ''
+        }
+      }
+
       return this.process(this.source)
+    }
+
+  , matches: function (item) {
+      for(var i in this.source) {
+        var pos = this.source[i].toLowerCase().indexOf(item.trim().toLowerCase())
+        if (pos != -1) {
+          return true
+        }
+      }
+
+      return false
     }
 
   // modified typeahead function adding button handling and remove mouseleave
@@ -173,12 +212,38 @@
 
       this.$button
         .on('click', $.proxy(this.toggle, this))
+
+
+    }
+
+  , getdataval: function () {
+      // clear hidden field
+      this.$target.val('').trigger('change')
+
+      // get passed-in combobox data
+      var val = this.$source.attr('data-value')
+
+      if (this.options.freeform) {
+        if (this.map[val]) {
+          this.$element.val(this.map[val])
+        }
+        else {
+          this.$element.val(val)
+        }
+      }
+
+      if (val !== '') {
+        this.$source.val(val).trigger('change')
+        this.$target.val(val).trigger('change')
+      }
     }
 
   // modified typeahead function to clear on type and prevent on moving around
   , keyup: function (e) {
       switch(e.keyCode) {
         case 40: // down arrow
+          if (!this.shown) this.lookup() // open dropdown on down arrow
+          break
         case 39: // right arrow
         case 38: // up arrow
         case 37: // left arrow
@@ -190,6 +255,11 @@
           break
 
         case 9: // tab
+          if (this.options.freeform) {
+            if (!this.shown) return
+            this.select(true)
+            break
+          }
         case 13: // enter
           if (!this.shown) return
           this.select()
@@ -214,19 +284,32 @@
       var that = this
       this.focused = false
       var val = this.$element.val()
-      if (!this.selected && val !== '' ) {
+
+      if (val !== '') {
+        if (!this.selected) {
           // only override user's data if freeform option is not set
           if (!this.options.freeform) {
-              this.$element.val('')
-              this.$source.val('').trigger('change')
-              this.$target.val('').trigger('change')
+            this.$element.val('')
+            this.$source.val('').trigger('change')
+            this.$target.val('').trigger('change')
           }
           else {
-              this.$source.val(val).trigger('change')
-              this.$target.val(val).trigger('change')
-              this.$container.addClass('combobox-selected')
+            this.$source.val(val).trigger('change')
+            this.$target.val(val).trigger('change')
           }
+        }
+        else {
+          if (this.options.freeform) {
+            this.$target.val(this.map[val]).trigger('change')
+          }
+          else {
+            this.$target.val(this.mapi[val]).trigger('change')
+          }
+        }
       }
+
+      this.$container.addClass('combobox-selected')
+
       if (!this.mousedover && this.shown) setTimeout(function () { that.hide() }, 200)
     }
 
@@ -251,7 +334,7 @@
 
   $.fn.combobox.defaults = {
   template: '<div class="combobox-container"><input type="hidden" /><input type="text" autocomplete="off" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
-  , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
+    , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
   }
 
