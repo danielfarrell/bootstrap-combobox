@@ -254,6 +254,7 @@
       } else {
         if (this.shown) {
           this.hide();
+          this.$element.focus();
         } else {
           this.clearElement();
           this.lookup();
