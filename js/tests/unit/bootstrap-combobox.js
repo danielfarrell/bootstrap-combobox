@@ -37,7 +37,7 @@ $(function () {
         combobox.$menu.remove()
       })
 
-      test("should listen to an button", function () {
+      test("should listen to a button", function () {
         var $select = $('<select />')
           , $button = $select.combobox().data('combobox').$button
         ok($._data($button[0], 'events').click, 'has a click event')
@@ -98,6 +98,26 @@ $(function () {
         combobox.$container.remove()
       })
 
+      test("should show menu when no item is selected and down arrow is pressed", function() {
+        var $select = $('<select><option></option><option>aa</option><option>ab</option><option>ac</option></select>').appendTo('body')
+          , $input = $select.combobox().data('combobox').$element
+          , combobox = $select.data('combobox')
+
+          $input.trigger({
+              type: 'keyup'
+              , keyCode: 40
+          })
+
+          ok(combobox.$menu.is(":visible"), 'menu is visible')
+          equal(combobox.$menu.find('li').length, 3, 'has 3 items in menu')
+          equal(combobox.$menu.find('.active').length, 1, 'one item is active')
+          ok(combobox.$menu.find('li').first().hasClass('active'), 'first item is active')
+
+          combobox.$menu.remove()
+          $select.remove()
+          combobox.$container.remove()
+      })
+
       test("should set next item when down arrow is pressed", function () {
         var $select = $('<select><option></option><option>aa</option><option>ab</option><option>ac</option></select>').appendTo('body')
           , $input = $select.combobox().data('combobox').$element
@@ -138,7 +158,7 @@ $(function () {
           , $input = combobox.$element
           , $source = combobox.$source
           , $target = combobox.$target
-          
+
 
         $input.val('a')
         combobox.lookup()
@@ -237,6 +257,21 @@ $(function () {
         combobox.$menu.remove()
       })
 
+      test("should keep input on blur when value does not exist", function() {
+        var $select = $('<select><option>aa</option></select>')
+          , $input = $select.combobox({keeponblur: true}).data('combobox').$element
+          , combobox = $select.data('combobox')
+
+        $input.val('KEEP ON BLUR')
+        combobox.lookup()
+        $input.trigger('blur')
+
+        equal($input.val(), 'KEEP ON BLUR', 'input value was correctly set')
+        equal($select.val(), 'aa', 'select value was correctly set')
+
+        combobox.$menu.remove()
+      })
+
       test("should set placeholder text on the input if specified text of no value option", function() {
         var $select = $('<select><option value="">Pick One</option><option value="aa">aa</option><option value="ab">ab</option><option value="ac">ac</option></select>')
           , $input = $select.combobox().data('combobox').$element
@@ -295,5 +330,20 @@ $(function () {
         equal($input.attr('title'), 'A title', 'title was correctly set')
 
         combobox.$menu.remove()
+      })
+
+      test("should copy data-value attribute to the input if specified on the select and freeform is set", function() {
+        var $select = $('<select data-value="bb"><option></option><option>aa</option><option selected>ab</option><option>ac</option></select>')
+          , $input = $select.combobox({freeform: true}).data('combobox').$element
+          , $target = $select.combobox({freeform: true}).data('combobox').$target
+          , combobox = $select.data('combobox')
+
+          equal($input.val(), 'bb', 'input value was correctly set')
+          equal($target.val(), 'bb', 'hidden input value was correctly set')
+          equal($select.val(), '', 'select value was correctly set')
+
+          combobox.$menu.remove()
+          $select.remove()
+          combobox.$container.remove()
       })
 })

@@ -44,6 +44,15 @@ combobox:
       });
     </script>
 
+Finally, if you need to keep the values on the input of the combobox upon submit (for instance, when you are doing
+validation via an AJAX call), you can pass via the JSON option object the attribute "keeponblur" set to "true":
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('.combobox').combobox({freeform: true, keeponblur: true});
+      });
+    </script>
+
 ## Live Example
 
 http://dl.dropbox.com/u/21368/bootstrap-combobox/index.html

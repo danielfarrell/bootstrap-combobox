@@ -73,7 +73,7 @@
         source.push(option.text())
         if (option.prop('selected')) {
           selected = option.text()
-          selectedValue = option.val()
+          selectedValue = option.val() ? option.val() : option.text()
         }
       })
       this.map = map
@@ -130,6 +130,7 @@
 
   , clearTarget: function () {
     this.$source.val('')
+
     if (!this.options.freeform) {
       this.$target.val('')
     }
@@ -212,18 +213,16 @@
 
       this.$button
         .on('click', $.proxy(this.toggle, this))
-
-
     }
 
   , getdataval: function () {
-      // clear hidden field
-      this.$target.val('').trigger('change')
-
       // get passed-in combobox data
       var val = this.$source.attr('data-value')
 
       if (this.options.freeform) {
+        // clear hidden field
+        this.$target.val('').trigger('change')
+
         if (this.map[val]) {
           this.$element.val(this.map[val])
         }
@@ -232,7 +231,7 @@
         }
       }
 
-      if (val !== '') {
+      if (val !== '' && val !== undefined) {
         this.$source.val(val).trigger('change')
         this.$target.val(val).trigger('change')
       }
@@ -303,6 +302,10 @@
             this.$target.val(this.map[val]).trigger('change')
           }
           else {
+            if (!this.options.keeponblur) {
+              this.$element.val('')
+            }
+
             this.$target.val(this.mapi[val]).trigger('change')
           }
         }
