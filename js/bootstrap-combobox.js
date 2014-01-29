@@ -46,7 +46,12 @@
     constructor: Combobox
 
   , setup: function () {
-      var combobox = $(this.options.template);
+	  // check if bootstrap 3 exist
+	  if ($(".form-control")[0]){
+	  	var combobox = $(this.options.template_alt);
+	  }else{
+		var combobox = $(this.options.template);
+	  }
       this.$source.before(combobox);
       this.$source.hide();
       return combobox;
@@ -395,6 +400,7 @@
 
   $.fn.combobox.defaults = {
   template: '<div class="combobox-container"><input type="hidden" /><input type="text" autocomplete="off" /><span class="add-on btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="icon-remove"/></span></span></div>'
+  , template_alt: '<div class="combobox-container input-group"><input type="hidden" /><input type="text" class="form-control"  autocomplete="off" /><span class="input-group-addon btn dropdown-toggle" data-dropdown="dropdown"><span class="caret"/><span class="combobox-clear"><i class="glyphicon glyphicon-remove icon-remove"/></span></span></div>'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#"></a></li>'
   };
