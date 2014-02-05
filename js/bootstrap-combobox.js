@@ -52,6 +52,18 @@
       return combobox;
     }
 
+  , disable: function() {
+    this.$element.prop('disabled', true)
+    this.$button.attr('disabled', true)
+    this.$button.off('click')
+  }
+
+  , enable: function() {
+    this.$element.prop('disabled', false)
+    this.$button.attr('disabled', false)
+    this.$button.on('click', $.proxy(this.toggle, this))
+  }
+
   , parse: function () {
       var that = this
         , map = {}
@@ -385,6 +397,7 @@
 
   $.fn.combobox = function ( option ) {
     return this.each(function () {
+      if ($(this).is('input')) return      
       var $this = $(this)
         , data = $this.data('combobox')
         , options = typeof option == 'object' && option;
