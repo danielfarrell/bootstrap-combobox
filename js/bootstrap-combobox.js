@@ -248,6 +248,13 @@
   , refresh: function () {
     this.source = this.parse();
     this.options.items = this.source.length;
+    this.options.placeholder = this.$source.attr('data-placeholder') || this.options.placeholder;
+    this.$element.attr('placeholder', this.options.placeholder);
+    this.$target.val(this.$source.val());
+    this.$element.attr('required', this.$source.attr('required'));
+    this.$element.attr('rel', this.$source.attr('rel'));
+    this.$element.attr('title', this.$source.attr('title'));
+    this.$element.attr('class', this.$source.attr('class'));
   }
 
   , listen: function () {
