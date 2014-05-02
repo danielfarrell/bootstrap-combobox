@@ -27,6 +27,26 @@ Then just activate the plugin on a normal select box(suggest having a blank opti
       });
     </script>
 
+### Options
+
+When activating the plugin, you may include an object containing options for the combobox
+
+    $('.combobox').combobox({bsVersion: '2'});
+
+`menu`: Custom markup for the dropdown menu list element.
+
+`item`: Custom markup for the dropdown menu list items.
+
+`matcher`: Custom function with one `item` argument that compares the item to the input. Defaults to matching on the query being a substring of the item, case insenstive
+
+ `sorter`: Custom function that sorts a list `items` for display in the dropdown
+
+ `highlighter`: Custom function for highlighting an `item`. Defaults to bolding the query within a matched item
+
+ `template`: Custom function that returns markup for the combobox.
+
+ `bsVersion`: Version of bootstrap being used. This is used by the default `template` function to generate markup correctly. Defaults to '3'. Set to '2' for compatibility with Bootstrap 2
+
 ## Live Example
 
 http://dl.dropbox.com/u/21368/bootstrap-combobox/index.html
