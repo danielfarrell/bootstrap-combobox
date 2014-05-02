@@ -308,4 +308,16 @@ $(function () {
 
         combobox.$menu.remove()
       })
+
+      test("should respect disabled attribute", function() {
+        var $select = $('<select title="A title" disabled><option></option><option>aa</option><option selected>ab</option><option>ac</option></select>')
+          , $input = $select.combobox().data('combobox').$element
+          , combobox = $select.data('combobox')
+
+        equal($input.prop('disabled'), true)
+        equal(combobox.$button.attr('disabled'), "disabled")
+        equal(combobox.disabled, true)
+
+        combobox.$menu.remove()
+      })
 })

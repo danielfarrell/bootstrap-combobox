@@ -53,6 +53,17 @@
       return combobox;
     }
 
+  , disable: function() {
+      this.$element.prop('disabled', true)
+      this.$button.attr('disabled', true)
+      this.disabled = true
+    }
+
+  , enable: function() {
+      this.$element.prop('disabled', false)
+      this.$button.attr('disabled', false)
+      this.disabled = false
+    }
   , parse: function () {
       var that = this
         , map = {}
@@ -83,17 +94,19 @@
     }
 
   , transferAttributes: function() {
-    this.options.placeholder = this.$source.attr('data-placeholder') || this.options.placeholder;
-    this.$element.attr('placeholder', this.options.placeholder);
-    this.$target.prop('name', this.$source.prop('name'));
-    this.$target.val(this.$source.val());
-    this.$source.removeAttr('name');  // Remove from source otherwise form will pass parameter twice.
-    this.$element.attr('required', this.$source.attr('required'));
-    this.$element.attr('rel', this.$source.attr('rel'));
-    this.$element.attr('title', this.$source.attr('title'));
-    this.$element.attr('class', this.$source.attr('class'));
-    this.$element.attr('tabindex', this.$source.attr('tabindex'));
-    this.$source.removeAttr('tabindex');
+    this.options.placeholder = this.$source.attr('data-placeholder') || this.options.placeholder
+    this.$element.attr('placeholder', this.options.placeholder)
+    this.$target.prop('name', this.$source.prop('name'))
+    this.$target.val(this.$source.val())
+    this.$source.removeAttr('name')  // Remove from source otherwise form will pass parameter twice.
+    this.$element.attr('required', this.$source.attr('required'))
+    this.$element.attr('rel', this.$source.attr('rel'))
+    this.$element.attr('title', this.$source.attr('title'))
+    this.$element.attr('class', this.$source.attr('class'))
+    this.$element.attr('tabindex', this.$source.attr('tabindex'))
+    this.$source.removeAttr('tabindex')
+    if (this.$source.attr('disabled')!==undefined)
+      this.disable();
   }
 
   , select: function () {
@@ -225,16 +238,18 @@
     }
 
   , toggle: function () {
-    if (this.$container.hasClass('combobox-selected')) {
-      this.clearTarget();
-      this.triggerChange();
-      this.clearElement();
-    } else {
-      if (this.shown) {
-        this.hide();
-      } else {
+    if (!this.disabled) {
+      if (this.$container.hasClass('combobox-selected')) {
+        this.clearTarget();
+        this.triggerChange();
         this.clearElement();
-        this.lookup();
+      } else {
+        if (this.shown) {
+          this.hide();
+        } else {
+          this.clearElement();
+          this.lookup();
+        }
       }
     }
   }
@@ -391,7 +406,6 @@
 
   /* COMBOBOX PLUGIN DEFINITION
    * =========================== */
-
   $.fn.combobox = function ( option ) {
     return this.each(function () {
       var $this = $(this)
