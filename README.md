@@ -49,7 +49,11 @@ When activating the plugin, you may include an object containing options for the
 
 ## Live Example
 
+### Bootstrap 2.0 Version
 http://dl.dropbox.com/u/21368/bootstrap-combobox/index.html
+
+### Bootstrap 3.0 Version
+http://bootstrap-combobox-test.herokuapp.com/
 
 ## License
 
