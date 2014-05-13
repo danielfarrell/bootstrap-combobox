@@ -136,12 +136,16 @@
         })
         .show();
 
+      $('.dropdown-menu').on('mousedown', $.proxy(this.scrollSafety, this));
+
       this.shown = true;
       return this;
     }
 
   , hide: function () {
       this.$menu.hide();
+      $('.dropdown-menu').off('mousedown', $.proxy(this.scrollSafety, this));
+      this.$element.on('blur', $.proxy(this.blur, this));
       this.shown = false;
       return this;
     }
@@ -254,6 +258,11 @@
     }
   }
 
+  , scrollSafety: function(e) {
+      if (e.target.tagName == 'UL') {
+          this.$element.off('blur');
+      }
+  }
   , clearElement: function () {
     this.$element.val('').focus();
   }
