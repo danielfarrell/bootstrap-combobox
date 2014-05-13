@@ -4,6 +4,10 @@
   margin-bottom: 0;
   vertical-align: top;
 }
+.form-search .combobox-container .input-group-addon,
+.form-inline .combobox-container .input-group-addon {
+  width: auto;
+}
 .combobox-selected .caret {
   display: none;
 }
