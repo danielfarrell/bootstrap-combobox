@@ -47,6 +47,9 @@ When activating the plugin, you may include an object containing options for the
 
  `bsVersion`: Version of bootstrap being used. This is used by the default `template` function to generate markup correctly. Defaults to '3'. Set to '2' for compatibility with Bootstrap 2
 
+## Dependencies
+Uses the latest 1.X version of jQuery and the latest 2.X or 3.X of bootstrap.
+
 ## Live Example
 
 ### Bootstrap 2.0 Version
