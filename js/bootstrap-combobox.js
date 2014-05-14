@@ -54,15 +54,17 @@
     }
 
   , disable: function() {
-      this.$element.prop('disabled', true)
-      this.$button.attr('disabled', true)
-      this.disabled = true
+      this.$element.prop('disabled', true);
+      this.$button.attr('disabled', true);
+      this.disabled = true;
+      this.$container.addClass('combobox-disabled');
     }
 
   , enable: function() {
-      this.$element.prop('disabled', false)
-      this.$button.attr('disabled', false)
-      this.disabled = false
+      this.$element.prop('disabled', false);
+      this.$button.attr('disabled', false);
+      this.disabled = false;
+      this.$container.removeClass('combobox-disabled');
     }
   , parse: function () {
       var that = this
