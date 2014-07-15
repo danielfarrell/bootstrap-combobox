@@ -26,10 +26,10 @@
   var Combobox = function ( element, options ) {
     this.options = $.extend({}, $.fn.combobox.defaults, options);
     this.$source = $(element);
-    this.$container = this.setup();
     this.$element = this.$container.find('input[type=text]');
     this.$target = this.$container.find('input[type=hidden]');
     this.$button = this.$container.find('.dropdown-toggle');
+    this.$container = this.setup();
     this.$menu = $(this.options.menu).appendTo('body');
     this.template = this.options.template || this.template
     this.matcher = this.options.matcher || this.matcher;
