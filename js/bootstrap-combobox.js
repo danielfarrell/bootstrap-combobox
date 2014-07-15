@@ -27,7 +27,7 @@
     this.options = $.extend({}, $.fn.combobox.defaults, options);
     this.$source = $(element);
     this.$menu = $(this.options.menu).appendTo('body');
-    this.template = this.options.template || this.template
+    this.template = this.options.template || this.template;
     this.matcher = this.options.matcher || this.matcher;
     this.sorter = this.options.sorter || this.sorter;
     this.highlighter = this.options.highlighter || this.highlighter;
