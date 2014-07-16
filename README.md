@@ -40,6 +40,10 @@ When activating the plugin, you may include an object containing options for the
  `highlighter`: Custom function for highlighting an `item`. Defaults to bolding the query within a matched item
 
  `template`: Custom function that returns markup for the combobox.
+ 
+ `placeholder`: Placeholder to use.
+ 
+ `defaultValue`: Option to pre-select. Matches based on value attribute of all available options.
 
  `bsVersion`: Version of bootstrap being used. This is used by the default `template` function to generate markup correctly. Defaults to '3'. Set to '2' for compatibility with Bootstrap 2
 

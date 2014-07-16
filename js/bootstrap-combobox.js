@@ -30,7 +30,7 @@
     this.sorter = this.options.sorter || this.sorter;
     this.highlighter = this.options.highlighter || this.highlighter;
     this.placeholder = this.options.placeholder || null;
-    this.default_value = this.options.default_value || null;
+    this.defaultValue = this.options.defaultValue || null;
     this.$source = $(element);
     this.$container = this.setup();
     this.$element = this.$container.find('input[type=text]');
@@ -84,7 +84,7 @@
         source.push(option.text());
 
         // if there is a default value provided pre-select that, else use option with the selected attribute
-        if(that.default_value !== null && that.default_value.toString() === option.val()) {
+        if(that.defaultValue !== null && that.defaultValue.toString() === option.val()) {
             selected = option.text();
             selectedValue = option.val();
             that.$source.trigger('selected', option.val());
@@ -165,20 +165,20 @@
 
   , process: function (items) {
       var that = this
-      , filtered_items;
+      , filteredItems;
 
-      filtered_items = $.grep(items, function (item) {
+      filteredItems = $.grep(items, function (item) {
         return that.matcher(item);
       })
 
-      filtered_items = this.sorter(filtered_items);
+      filteredItems = this.sorter(filteredItems);
 
-      if (!filtered_items.length) {
+      if (!filteredItems.length) {
         //return this.shown ? this.hide() : this;
         return this.render(items).show();
       }
 
-      return this.render(filtered_items.slice(0, this.options.items)).show();
+      return this.render(filteredItems.slice(0, this.options.items)).show();
     }
 
   , template: function() {
@@ -428,7 +428,6 @@
   /* COMBOBOX PLUGIN DEFINITION
    * =========================== */
   $.fn.combobox = function ( option ) {
-
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('combobox')
