@@ -84,19 +84,11 @@
         source.push(option.text());
 
         // if there is a default value provided pre-select that, else use option with the selected attribute
-        //if((that.default_value !== null && that.default_value.toString() === option.val()) ||
-        //   (option.prop('selected') && that.default_value === null)) {
-        //  selected = option.text();
-        //  selectedValue = option.val();
-        //  that.$source.trigger('selected', option.val());
-        //}
-
         if(that.default_value !== null && that.default_value.toString() === option.val()) {
             selected = option.text();
             selectedValue = option.val();
             that.$source.trigger('selected', option.val());
         }
-
       })
       this.map = map;
       if (selected) {
