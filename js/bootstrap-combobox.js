@@ -281,7 +281,7 @@
     this.$source.val('');
     this.$target.val('');
     this.$container.removeClass('combobox-selected');
-    this.$source.trigger('selected', 'clearTarget');
+    this.$source.trigger('selected', null);
     this.selected = false;
   }
 
