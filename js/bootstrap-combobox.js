@@ -25,16 +25,18 @@
 
   var Combobox = function ( element, options ) {
     this.options = $.extend({}, $.fn.combobox.defaults, options);
-    this.$source = $(element);
-    this.$menu = $(this.options.menu).appendTo('body');
     this.template = this.options.template || this.template;
     this.matcher = this.options.matcher || this.matcher;
     this.sorter = this.options.sorter || this.sorter;
     this.highlighter = this.options.highlighter || this.highlighter;
+    this.placeholder = this.options.placeholder || null;
+    this.default_value = this.options.default_value || null;
+    this.$source = $(element);
     this.$container = this.setup();
     this.$element = this.$container.find('input[type=text]');
     this.$target = this.$container.find('input[type=hidden]');
     this.$button = this.$container.find('.dropdown-toggle');
+    this.$menu = $(this.options.menu).appendTo('body');
     this.shown = false;
     this.selected = false;
     this.refresh();
@@ -74,16 +76,27 @@
         , selectedValue = '';
       this.$source.find('option').each(function() {
         var option = $(this);
-        if (option.val() === '') {
+        if (option.val() === '' && that.options.placeholder === null) {
           that.options.placeholder = option.text();
           return;
         }
         map[option.text()] = option.val();
         source.push(option.text());
-        if (option.prop('selected')) {
-          selected = option.text();
-          selectedValue = option.val();
+
+        // if there is a default value provided pre-select that, else use option with the selected attribute
+        //if((that.default_value !== null && that.default_value.toString() === option.val()) ||
+        //   (option.prop('selected') && that.default_value === null)) {
+        //  selected = option.text();
+        //  selectedValue = option.val();
+        //  that.$source.trigger('selected', option.val());
+        //}
+
+        if(that.default_value !== null && that.default_value.toString() === option.val()) {
+            selected = option.text();
+            selectedValue = option.val();
+            that.$source.trigger('selected', option.val());
         }
+
       })
       this.map = map;
       if (selected) {
@@ -116,6 +129,7 @@
       this.$element.val(this.updater(val)).trigger('change');
       this.$target.val(this.map[val]).trigger('change');
       this.$source.val(this.map[val]).trigger('change');
+      this.$source.trigger('selected', this.map[val]);
       this.$container.addClass('combobox-selected');
       this.selected = true;
       return this.hide();
@@ -158,19 +172,21 @@
     }
 
   , process: function (items) {
-      var that = this;
+      var that = this
+      , filtered_items;
 
-      items = $.grep(items, function (item) {
+      filtered_items = $.grep(items, function (item) {
         return that.matcher(item);
       })
 
-      items = this.sorter(items);
+      filtered_items = this.sorter(filtered_items);
 
-      if (!items.length) {
-        return this.shown ? this.hide() : this;
+      if (!filtered_items.length) {
+        //return this.shown ? this.hide() : this;
+        return this.render(items).show();
       }
 
-      return this.render(items.slice(0, this.options.items)).show();
+      return this.render(filtered_items.slice(0, this.options.items)).show();
     }
 
   , template: function() {
@@ -273,6 +289,7 @@
     this.$source.val('');
     this.$target.val('');
     this.$container.removeClass('combobox-selected');
+    this.$source.trigger('selected', 'clearTarget');
     this.selected = false;
   }
 
@@ -393,6 +410,7 @@
         this.$element.val('');
         this.$source.val('').trigger('change');
         this.$target.val('').trigger('change');
+        this.$source.trigger('selected', null);
       }
       if (!this.mousedover && this.shown) {setTimeout(function () { that.hide(); }, 200);}
     }
@@ -418,6 +436,7 @@
   /* COMBOBOX PLUGIN DEFINITION
    * =========================== */
   $.fn.combobox = function ( option ) {
+
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('combobox')
