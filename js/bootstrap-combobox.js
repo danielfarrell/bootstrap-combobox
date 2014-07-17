@@ -70,7 +70,8 @@
     }
   , parse: function () {
       var that = this
-        , map = {}
+        , textToValueMap = {}
+        , valueToTextMap = {}
         , source = []
         , selected = false
         , selectedValue = '';
@@ -80,7 +81,8 @@
           that.options.placeholder = option.text();
           return;
         }
-        map[option.text()] = option.val();
+        textToValueMap[option.text()] = option.val();
+        valueToTextMap[option.val()] = option.text();
         source.push(option.text());
 
         // if there is a default value provided pre-select that, else use option with the selected attribute
@@ -90,7 +92,8 @@
             that.$source.trigger('selected', option.val());
         }
       })
-      this.map = map;
+      this.textToValueMap = textToValueMap;
+      this.valueToTextMap = valueToTextMap;
       if (selected) {
         this.$element.val(selected);
         this.$target.val(selectedValue);
@@ -119,9 +122,9 @@
   , select: function () {
       var val = this.$menu.find('.active').attr('data-value');
       this.$element.val(this.updater(val)).trigger('change');
-      this.$target.val(this.map[val]).trigger('change');
-      this.$source.val(this.map[val]).trigger('change');
-      this.$source.trigger('selected', this.map[val]);
+      this.$target.val(this.textToValueMap[val]).trigger('change');
+      this.$source.val(this.textToValueMap[val]).trigger('change');
+      this.$source.trigger('selected', this.textToValueMap[val]);
       this.$container.addClass('combobox-selected');
       this.selected = true;
       return this.hide();
@@ -423,17 +426,32 @@
   , mouseleave: function (e) {
       this.mousedover = false;
     }
+
+  , setValue: function (value) {
+      if(value && value.toString() in this.valueToTextMap) {
+        this.$element.val(this.valueToTextMap[value]);
+        this.$target.val(value);
+        this.$container.addClass('combobox-selected');
+        this.selected = true;
+      }
+      else if(value === null) {
+        this.clearTarget();
+      }
+    }
   };
 
   /* COMBOBOX PLUGIN DEFINITION
    * =========================== */
-  $.fn.combobox = function ( option ) {
+   $.fn.combobox = function ( option ) {
+    var option_args = Array.prototype.slice.call(arguments, 1);
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('combobox')
         , options = typeof option == 'object' && option;
       if(!data) {$this.data('combobox', (data = new Combobox(this, options)));}
-      if (typeof option == 'string') {data[option]();}
+      if (typeof option == 'string') {
+          data[option].apply(data, option_args);
+      }
     });
   };
 
