@@ -33,7 +33,7 @@
     this.defaultValue = this.options.defaultValue || null;
     this.$source = $(element);
     this.$container = this.setup();
-    this.$element = this.$container.find('input[type=text]');
+    this.$element = this.$container.find('input:not([type=hidden])');
     this.$target = this.$container.find('input[type=hidden]');
     this.$button = this.$container.find('.dropdown-toggle');
     this.$menu = $(this.options.menu).appendTo('body');
@@ -299,7 +299,7 @@
 
   , listen: function () {
       this.$element
-        .on('focus',    $.proxy(this.focus, this))
+        .on('focus',    $.proxy(this._focus, this))
         .on('blur',     $.proxy(this.blur, this))
         .on('keypress', $.proxy(this.keypress, this))
         .on('keyup',    $.proxy(this.keyup, this));
@@ -393,7 +393,7 @@
       e.preventDefault();
   }
 
-  , focus: function (e) {
+  , _focus: function (e) {
       this.focused = true;
     }
 
@@ -436,7 +436,16 @@
       }
       else if(value === null) {
         this.clearTarget();
+        this.clearElement();
       }
+    }
+
+    , focus: function () {
+      var that = this;
+      // introduce a small delay in executing focusing
+      setTimeout(function() {
+        that.$element.focus();
+      }, 0);
     }
   };
 
