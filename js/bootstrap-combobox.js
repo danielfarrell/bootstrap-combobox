@@ -25,16 +25,18 @@
 
   var Combobox = function ( element, options ) {
     this.options = $.extend({}, $.fn.combobox.defaults, options);
-    this.$source = $(element);
-    this.$container = this.setup();
-    this.$element = this.$container.find('input[type=text]');
-    this.$target = this.$container.find('input[type=hidden]');
-    this.$button = this.$container.find('.dropdown-toggle');
-    this.$menu = $(this.options.menu).appendTo('body');
-    this.template = this.options.template || this.template
+    this.template = this.options.template || this.template;
     this.matcher = this.options.matcher || this.matcher;
     this.sorter = this.options.sorter || this.sorter;
     this.highlighter = this.options.highlighter || this.highlighter;
+    this.placeholder = this.options.placeholder || null;
+    this.defaultValue = this.options.defaultValue || null;
+    this.$source = $(element);
+    this.$container = this.setup();
+    this.$element = this.$container.find('input:not([type=hidden])');
+    this.$target = this.$container.find('input[type=hidden]');
+    this.$button = this.$container.find('.dropdown-toggle');
+    this.$menu = $(this.options.menu).appendTo('body');
     this.shown = false;
     this.selected = false;
     this.refresh();
@@ -68,24 +70,30 @@
     }
   , parse: function () {
       var that = this
-        , map = {}
+        , textToValueMap = {}
+        , valueToTextMap = {}
         , source = []
         , selected = false
         , selectedValue = '';
       this.$source.find('option').each(function() {
         var option = $(this);
-        if (option.val() === '') {
+        if (option.val() === '' && that.options.placeholder === null) {
           that.options.placeholder = option.text();
           return;
         }
-        map[option.text()] = option.val();
+        textToValueMap[option.text()] = option.val();
+        valueToTextMap[option.val()] = option.text();
         source.push(option.text());
-        if (option.prop('selected')) {
-          selected = option.text();
-          selectedValue = option.val();
+
+        // if there is a default value provided pre-select that, else use option with the selected attribute
+        if(that.defaultValue !== null && that.defaultValue.toString() === option.val()) {
+            selected = option.text();
+            selectedValue = option.val();
+            that.$source.trigger('selected', option.val());
         }
       })
-      this.map = map;
+      this.textToValueMap = textToValueMap;
+      this.valueToTextMap = valueToTextMap;
       if (selected) {
         this.$element.val(selected);
         this.$target.val(selectedValue);
@@ -114,8 +122,9 @@
   , select: function () {
       var val = this.$menu.find('.active').attr('data-value');
       this.$element.val(this.updater(val)).trigger('change');
-      this.$target.val(this.map[val]).trigger('change');
-      this.$source.val(this.map[val]).trigger('change');
+      this.$target.val(this.textToValueMap[val]).trigger('change');
+      this.$source.val(this.textToValueMap[val]).trigger('change');
+      this.$source.trigger('selected', this.textToValueMap[val]);
       this.$container.addClass('combobox-selected');
       this.selected = true;
       return this.hide();
@@ -158,19 +167,21 @@
     }
 
   , process: function (items) {
-      var that = this;
+      var that = this
+      , filteredItems;
 
-      items = $.grep(items, function (item) {
+      filteredItems = $.grep(items, function (item) {
         return that.matcher(item);
       })
 
-      items = this.sorter(items);
+      filteredItems = this.sorter(filteredItems);
 
-      if (!items.length) {
-        return this.shown ? this.hide() : this;
+      if (!filteredItems.length) {
+        //return this.shown ? this.hide() : this;
+        return this.render(items).show();
       }
 
-      return this.render(items.slice(0, this.options.items)).show();
+      return this.render(filteredItems.slice(0, this.options.items)).show();
     }
 
   , template: function() {
@@ -273,6 +284,7 @@
     this.$source.val('');
     this.$target.val('');
     this.$container.removeClass('combobox-selected');
+    this.$source.trigger('selected', null);
     this.selected = false;
   }
 
@@ -287,7 +299,7 @@
 
   , listen: function () {
       this.$element
-        .on('focus',    $.proxy(this.focus, this))
+        .on('focus',    $.proxy(this._focus, this))
         .on('blur',     $.proxy(this.blur, this))
         .on('keypress', $.proxy(this.keypress, this))
         .on('keyup',    $.proxy(this.keyup, this));
@@ -381,7 +393,7 @@
       e.preventDefault();
   }
 
-  , focus: function (e) {
+  , _focus: function (e) {
       this.focused = true;
     }
 
@@ -393,6 +405,7 @@
         this.$element.val('');
         this.$source.val('').trigger('change');
         this.$target.val('').trigger('change');
+        this.$source.trigger('selected', null);
       }
       if (!this.mousedover && this.shown) {setTimeout(function () { that.hide(); }, 200);}
     }
@@ -413,17 +426,41 @@
   , mouseleave: function (e) {
       this.mousedover = false;
     }
+
+  , setValue: function (value) {
+      if(value && value.toString() in this.valueToTextMap) {
+        this.$element.val(this.valueToTextMap[value]);
+        this.$target.val(value);
+        this.$container.addClass('combobox-selected');
+        this.selected = true;
+      }
+      else if(value === null) {
+        this.clearTarget();
+        this.clearElement();
+      }
+    }
+
+    , focus: function () {
+      var that = this;
+      // introduce a small delay in executing focusing
+      setTimeout(function() {
+        that.$element.focus();
+      }, 0);
+    }
   };
 
   /* COMBOBOX PLUGIN DEFINITION
    * =========================== */
-  $.fn.combobox = function ( option ) {
+   $.fn.combobox = function ( option ) {
+    var option_args = Array.prototype.slice.call(arguments, 1);
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('combobox')
         , options = typeof option == 'object' && option;
       if(!data) {$this.data('combobox', (data = new Combobox(this, options)));}
-      if (typeof option == 'string') {data[option]();}
+      if (typeof option == 'string') {
+          data[option].apply(data, option_args);
+      }
     });
   };
 

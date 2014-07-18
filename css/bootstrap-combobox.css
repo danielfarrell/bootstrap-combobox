@@ -18,6 +18,7 @@
 .typeahead-long {
   max-height: 300px;
   overflow-y: auto;
+  padding-right: 0.5em;
 }
 .control-group.error .combobox-container .add-on {
   color: #B94A48;
