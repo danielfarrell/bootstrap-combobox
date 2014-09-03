@@ -11,8 +11,11 @@
 .combobox-selected .caret {
   display: none;
 }
+.combobox-boostrap-2 .caret {
+  margin-top: 8px;
+}
 /* :not doesn't work in IE8 */
-.combobox-container:not(.combobox-selected) .glyphicon-remove {
+.combobox-container:not(.combobox-selected) .glyphicon-remove, .combobox-container:not(.combobox-selected) .icon-remove {
   display: none;
 }
 .typeahead-long {
