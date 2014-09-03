@@ -42,6 +42,21 @@ When activating the plugin, you may include an object containing options for the
  `template`: Custom function that returns markup for the combobox.
 
  `bsVersion`: Version of bootstrap being used. This is used by the default `template` function to generate markup correctly. Defaults to '3'. Set to '2' for compatibility with Bootstrap 2
+ 
+### Events
+You can also use HTML event attributes.
+
+`eventName`: Name of HTML event to use in input text.
+`eventFunction`: Function to execute on `eventName`.
+
+	<script type="text/javascript">
+	  $(document).ready(function(){
+	    $('.combobox').combobox({
+	    			eventName : 'onKeyPress',
+	    			eventFunction : 'if(event.keyCode==13){alert('You have pressed Enter key.'))}'});
+	  });
+	</script>
+
 
 ## Dependencies
 Uses the latest 1.X version of jQuery and the latest 2.X or 3.X of bootstrap.
