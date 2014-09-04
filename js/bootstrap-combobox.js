@@ -174,10 +174,26 @@
     }
 
   , template: function() {
+	  var beforeEvent_bsv2 = '<div class="combobox-container"><input type="hidden" /> <div class="input-append"> <input type="text" autocomplete="off" ';
+	  var afterEvent_bsv2 = '/> <span class="add-on dropdown-toggle" data-dropdown="dropdown"> <span class="caret"/> <i class="icon-remove"/> </span> </div> </div>';
+	  
+	  var beforeEvent_bsv3 = '<div class="combobox-container"> <input type="hidden" /> <div class="input-group"> <input type="text" autocomplete="off" ';
+	  var afterEvent_bsv3 = '/> <span class="input-group-addon dropdown-toggle" data-dropdown="dropdown"> <span class="caret" /> <span class="glyphicon glyphicon-remove" /> </span> </div> </div>';
+	  
       if (this.options.bsVersion == '2') {
-        return '<div class="combobox-container"><input type="hidden" /> <div class="input-append"> <input type="text" autocomplete="off" /> <span class="add-on dropdown-toggle" data-dropdown="dropdown"> <span class="caret"/> <i class="icon-remove"/> </span> </div> </div>'
+    	  if (this.options.eventName != null && this.options.eventFunction != null) {
+    		  return beforeEvent_bsv2 + this.options.eventName + '="' + this.options.eventFunction + '" ' + afterEvent_bsv2; 
+    	  } else if (this.options.eventName != null || this.options.eventFunction != null) {
+    		  console.warn('[bootstrap-combobox][WARNING]: The option eventName/eventFunction is not correct..');
+    	  }
+    	  return beforeEvent_bsv2 + afterEvent_bsv2;
       } else {
-        return '<div class="combobox-container"> <input type="hidden" /> <div class="input-group"> <input type="text" autocomplete="off" /> <span class="input-group-addon dropdown-toggle" data-dropdown="dropdown"> <span class="caret" /> <span class="glyphicon glyphicon-remove" /> </span> </div> </div>'
+    	  if (this.options.eventName != null && this.options.eventFunction != null) {
+    		  return beforeEvent_bsv3 + this.options.eventName + '="' + this.options.eventFunction + '" ' + afterEvent_bsv3; 
+    	  } else if (this.options.eventName != null || this.options.eventFunction != null) {
+    		  console.warn('[bootstrap-combobox][WARNING]: The option eventName/eventFunction is not correct.');
+    	  }
+    	  return beforeEvent_bsv3 + afterEvent_bsv3;
       }
     }
 
