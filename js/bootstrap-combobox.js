@@ -339,22 +339,22 @@
 
       e.stopPropagation();
     }
-  
+
   , fixMenuScroll: function(){
       var active = this.$menu.find('.active');
       if(active.length){
-    	  var top = active.position().top;
-    	  var bottom = top + active.height();
-    	  var scrollTop = this.$menu.scrollTop();
-    	  var menuHeight = this.$menu.height();
-    	  if(bottom > menuHeight){
-    		  this.$menu.scrollTop(scrollTop + bottom - menuHeight);
-    	  } else if(top < 0){
-    		  this.$menu.scrollTop(scrollTop + top);
-    	  }
+          var top = active.position().top;
+          var bottom = top + active.height();
+          var scrollTop = this.$menu.scrollTop();
+          var menuHeight = this.$menu.height();
+          if(bottom > menuHeight){
+              this.$menu.scrollTop(scrollTop + bottom - menuHeight);
+          } else if(top < 0){
+              this.$menu.scrollTop(scrollTop + top);
+          }
       }
   }
-  
+
   , keydown: function (e) {
       this.suppressKeyPressRepeat = ~$.inArray(e.keyCode, [40,38,9,13,27]);
       this.move(e);
