@@ -40,3 +40,6 @@
 .control-group.success .combobox-container .caret {
   border-top-color: #468847;
 }
+.dropdown-menu{
+  width: 100%;
+}
