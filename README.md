@@ -8,26 +8,30 @@ The dependencies are the Bootstrap stylesheet(CSS or LESS).  Include it and then
 
 Then just activate the plugin on a normal select box(suggest having a blank option first):
 
-    <select class="combobox">
-      <option></option>
-      <option value="PA">Pennsylvania</option>
-      <option value="CT">Connecticut</option>
-      <option value="NY">New York</option>
-      <option value="MD">Maryland</option>
-      <option value="VA">Virginia</option>
-    </select>
+``` 
+<select class="combobox">
+  <option></option>
+  <option value="PA">Pennsylvania</option>
+  <option value="CT">Connecticut</option>
+  <option value="NY">New York</option>
+  <option value="MD">Maryland</option>
+  <option value="VA">Virginia</option>
+</select>
 
-    <script type="text/javascript">
-      $(document).ready(function(){
-        $('.combobox').combobox();
-      });
-    </script>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.combobox').combobox();
+  });
+</script>
+```
 
 ### Options
 
 When activating the plugin, you may include an object containing options for the combobox
 
-    $('.combobox').combobox({bsVersion: '2'});
+``` 
+$('.combobox').combobox({bsVersion: '2'});
+```
 
 `menu`: Custom markup for the dropdown menu list element.
 
@@ -41,17 +45,22 @@ When activating the plugin, you may include an object containing options for the
 
  `template`: Custom function that returns markup for the combobox.
 
- `bsVersion`: Version of bootstrap being used. This is used by the default `template` function to generate markup correctly. Defaults to '3'. Set to '2' for compatibility with Bootstrap 2
+ `bsVersion`: Version of bootstrap being used. This is used by the default `template` :function to generate markup correctly. Defaults to '3'. Set to '2' for compatibility with Bootstrap 2
+
+`value`:the order way to default option (without `<option selected="selected">`) selected attribute
 
 ## Dependencies
+
 Uses the latest 1.X version of jQuery and the latest 2.X or 3.X of bootstrap.
 
 ## Live Example
 
 ### Bootstrap 2.0 Version
+
 http://dl.dropbox.com/u/21368/bootstrap-combobox/index.html
 
 ### Bootstrap 3.0 Version
+
 http://bootstrap-combobox-test.herokuapp.com/
 
 ## License
