@@ -320,4 +320,25 @@ $(function () {
 
         combobox.$menu.remove()
       })
+
+      test("should not show menu when shortcut combination query entered", function () {
+        var $select = $('<select title="A title" disabled><option></option><option>aa</option><option selected>ab</option><option>ac</option></select>')
+          , $input = $select.combobox().data('combobox').$element
+          , combobox = $select.data('combobox')
+          , key_event = $.Event('keyup')
+          , spy = sinon.spy(combobox, 'lookup')
+
+        key_event.keyCode = 65
+        key_event.ctrlKey = true
+
+        $input.trigger(key_event)
+
+        equal(spy.callCount, 0, 'lookup not called')
+        equal(combobox.$menu.find('li').length, 0, 'has 0 items in menu')
+        equal(combobox.$menu.find('.active').length, 0, 'no items are active')
+
+        combobox.$menu.remove()
+        $select.remove()
+        combobox.$container.remove()
+      })
 })

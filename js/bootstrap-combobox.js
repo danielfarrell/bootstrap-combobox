@@ -397,8 +397,10 @@
           break;
 
         default:
-          this.clearTarget();
-          this.lookup();
+          if (!e.altKey && !e.ctrlKey && !e.metaKey) {
+            this.clearTarget();
+            this.lookup();
+          }
       }
 
       e.stopPropagation();
