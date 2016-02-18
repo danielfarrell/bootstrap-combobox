@@ -330,19 +330,34 @@
         case 38: // up arrow
           e.preventDefault();
           this.prev();
-          this.fixMenuScroll();
+          this.scrollToOption();
           break;
 
         case 40: // down arrow
           e.preventDefault();
           this.next();
-          this.fixMenuScroll();
+          this.scrollToOption();
           break;
       }
 
       e.stopPropagation();
     }
-
+	
+  , scrollToOption: function () {
+	  var option = this.$menu.find('.active');
+      if(option.length){
+        var optionTop = option.offset().top,
+            menuTop = this.$menu.offset().top,
+            windowHeight = $(window).height(),    
+            optionBottom = windowHeight - optionTop - option.outerHeight(true),
+            menuButtom = windowHeight - menuTop - this.$menu.outerHeight(true);
+        if (menuTop > optionTop || menuButtom > optionBottom) {
+          this.$menu.scrollTop(option.offset().top - this.$menu.offset().top + this.$menu.scrollTop());
+        }
+      }
+    }
+	
+	// Not working as expected. Should be replaced by scrollToOption()
   , fixMenuScroll: function(){
       var active = this.$menu.find('.active');
       if(active.length){
