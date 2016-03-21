@@ -27,6 +27,7 @@
     this.options = $.extend({}, $.fn.combobox.defaults, options);
     this.template = this.options.template || this.template
     this.$source = $(element);
+    this.freeInput = this.options.freeInput || null
     this.$container = this.setup();
     this.$element = this.$container.find('input[type=text]');
     this.$target = this.$container.find('input[type=hidden]');
@@ -80,7 +81,7 @@
         }
         map[option.text()] = option.val();
         source.push(option.text());
-        if (option.prop('selected')) {
+        if (option.attr('selected')) {
           selected = option.text();
           selectedValue = option.val();
         }
@@ -98,11 +99,13 @@
   , transferAttributes: function() {
     this.options.placeholder = this.$source.attr('data-placeholder') || this.options.placeholder
     if(this.options.appendId !== "undefined") {
-    	this.$element.attr('id', this.$source.attr('id') + this.options.appendId);	
+    	this.$element.attr('id', this.$source.attr('id') + this.options.appendId);
     }
     this.$element.attr('placeholder', this.options.placeholder)
     this.$target.prop('name', this.$source.prop('name'))
-    this.$target.val(this.$source.val())
+    if (!this.freeInput) {
+      this.$target.val(this.$source.val())
+    }
     this.$source.removeAttr('name')  // Remove from source otherwise form will pass parameter twice.
     this.$element.attr('required', this.$source.attr('required'))
     this.$element.attr('rel', this.$source.attr('rel'))
@@ -177,10 +180,15 @@
     }
 
   , template: function() {
+      var freeInputAttributes = '';
+      if (this.freeInput) {
+        freeInputAttributes = 'name="' + this.freeInput.name + '" value="' + this.freeInput.value + '" '
+      }
+
       if (this.options.bsVersion == '2') {
-        return '<div class="combobox-container"><input type="hidden" /> <div class="input-append"> <input type="text" autocomplete="false" /> <span class="add-on dropdown-toggle" data-dropdown="dropdown"> <span class="caret"/> <i class="icon-remove"/> </span> </div> </div>'
+        return '<div class="combobox-container"><input type="hidden" /> <div class="input-append"> <input ' + freeInputAttributes + 'type="text" autocomplete="off" /> <span class="add-on dropdown-toggle" data-dropdown="dropdown"> <span class="caret"/> <i class="icon-remove"/> </span> </div> </div>'
       } else {
-        return '<div class="combobox-container"> <input type="hidden" /> <div class="input-group"> <input type="text" autocomplete="false" /> <span class="input-group-addon dropdown-toggle" data-dropdown="dropdown"> <span class="caret" /> <span class="glyphicon glyphicon-remove" /> </span> </div> </div>'
+        return '<div class="combobox-container"> <input type="hidden" /> <div class="input-group"> <input ' + freeInputAttributes + 'type="text" autocomplete="off" /> <span class="input-group-addon dropdown-toggle" data-dropdown="dropdown"> <span class="caret" /> <span class="glyphicon glyphicon-remove" /> </span> </div> </div>'
       }
     }
 
@@ -413,7 +421,7 @@
       var that = this;
       this.focused = false;
       var val = this.$element.val();
-      if (!this.selected && val !== '' ) {
+      if (!this.freeInput && !this.selected && val !== '' ) {
         this.$element.val('');
         this.$source.val('').trigger('change');
         this.$target.val('').trigger('change');
