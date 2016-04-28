@@ -63,7 +63,7 @@ When activating the plugin, you may include an object containing options for the
  `template`: Custom function that returns markup for the combobox.
 
  `bsVersion`: Version of bootstrap being used. This is used by the default `template` function to generate markup correctly. Defaults to '3'. Set to '2' for compatibility with Bootstrap 2
- 
+
  `appendId`: The desired id of the transformed combobox. This will become the id attr and can be mapped to a label using the for attribute. Useful for accessibility.
 
 

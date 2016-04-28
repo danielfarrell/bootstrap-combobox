@@ -1,5 +1,5 @@
 /* =============================================================
- * bootstrap-combobox.js v1.1.6
+ * bootstrap-combobox.js v1.1.7
  * =============================================================
  * Copyright 2012 Daniel Farrell
  *
@@ -98,7 +98,7 @@
   , transferAttributes: function() {
     this.options.placeholder = this.$source.attr('data-placeholder') || this.options.placeholder
     if(this.options.appendId !== "undefined") {
-    	this.$element.attr('id', this.$source.attr('id') + this.options.appendId);	
+    	this.$element.attr('id', this.$source.attr('id') + this.options.appendId);
     }
     this.$element.attr('placeholder', this.options.placeholder)
     this.$target.prop('name', this.$source.prop('name'))
