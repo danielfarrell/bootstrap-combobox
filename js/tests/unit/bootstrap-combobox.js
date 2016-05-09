@@ -320,4 +320,44 @@ $(function () {
 
         combobox.$menu.remove()
       })
+
+      test("should not set as selected if no select was selected before load with free input", function () {
+        var $select = $('<select><option>aa</option><option>ab</option><option>ac</option></select>')
+            , $input = $select.combobox({freeInput: {name:'foo', value:''}}).data('combobox').$element
+            , $target = $select.combobox({freeInput: {name:'foo', value:''}}).data('combobox').$target
+            , combobox = $select.data('combobox')
+
+        equal($input.val(), '', 'input value was correctly set')
+        equal($target.val(), '', 'hidden input value was correctly set')
+        equal($select.val(), 'aa', 'select value was correctly set')
+      })
+
+      test("should not clear input on blur when value does not exist with free input", function() {
+        var $select = $('<select><option>aa</option></select>')
+            , $input = $select.combobox({freeInput: {name:'foo', value:'bar'}}).data('combobox').$element
+            , combobox = $select.data('combobox')
+
+        $input.val('DOES NOT EXIST')
+        $input.trigger('keyup')
+        $input.trigger('blur')
+
+        equal($input.val(), 'DOES NOT EXIST', 'input value was correctly set')
+        equal($select.val(), 'aa', 'select value was correctly set')
+
+        combobox.$menu.remove()
+      })
+
+      test("should give input name attribute with free input", function () {
+        var $select = $('<select><option>aa</option></select>')
+            , $input = $select.combobox({freeInput: {name:'foo', value:'bar'}}).data('combobox').$element
+
+        equal($input.attr('name'), 'foo', 'input name was correctly set')
+      })
+
+      test("should copy value from data attribute to input with free input", function () {
+        var $select = $('<select><option>aa</option></select>')
+            , $input = $select.combobox({freeInput: {name:'foo', value:'bar'}}).data('combobox').$element
+
+        equal($input.val(), 'bar', 'input value was correctly set')
+      })
 })
