@@ -320,4 +320,16 @@ $(function () {
 
         combobox.$menu.remove()
       })
+
+      test("should append id if options.appendId is defined", function() {
+        var $select = $('<select />').attr('id', 'some_id');
+        $select.combobox({ appendId: '_appended' });
+        ok($select.data('combobox').$element.attr('id') == 'some_id_appended', 'id was appended correctly')
+      })
+
+      test("should not set id if options.appendId is undefined", function() {
+        var $select = $('<select />').attr('id', 'some_id');
+        $select.combobox();
+        ok($select.data('combobox').$element.attr('id') == undefined, 'id was not set')
+      })
 })
