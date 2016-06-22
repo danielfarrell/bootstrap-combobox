@@ -16,7 +16,7 @@
  * limitations under the License.
  * ============================================================ */
 
-!function( $ ) {
+(function( $ ) {
 
  "use strict";
 
@@ -459,4 +459,4 @@
 
   $.fn.combobox.Constructor = Combobox;
 
-}( window.jQuery );
+}( jQuery ));
