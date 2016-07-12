@@ -29,7 +29,7 @@ The dependencies are the Bootstrap stylesheet(CSS or LESS).  Include it and then
 
 Then just activate the plugin on a normal select box(suggest having a blank option first):
 
-    <select class="combobox">
+    <select class="combobox form-control hidden">
       <option></option>
       <option value="PA">Pennsylvania</option>
       <option value="CT">Connecticut</option>
