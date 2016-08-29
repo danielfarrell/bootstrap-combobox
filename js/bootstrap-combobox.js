@@ -47,7 +47,7 @@
     constructor: Combobox
 
   , setup: function () {
-      var combobox = $(this.template());
+      var combobox = typeof(this.template) == "function" ? $(this.template()) : $(this.template) ;
       this.$source.before(combobox);
       this.$source.hide();
       return combobox;
