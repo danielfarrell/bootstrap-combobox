@@ -454,7 +454,7 @@
   $.fn.combobox.defaults = {
     bsVersion: '3'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
-  , item: '<li><a href="#"></a></li>'
+  , item: '<li><a href="#" class="dropdown-item"></a></li>'
   };
 
   $.fn.combobox.Constructor = Combobox;
