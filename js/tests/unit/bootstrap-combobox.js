@@ -320,4 +320,9 @@ $(function () {
 
         combobox.$menu.remove()
       })
+
+      test("should return with custom template", function () {
+        var $select = $('<select title="A title"><option></option><option>aa</option><option selected>ab</option><option>ac</option></select>')
+        ok($($select).combobox({template: '<div class="combobox-container"> <input type="hidden" /> <div class="input-group"> <input type="text" autocomplete="false" /> <span class="input-group-addon dropdown-toggle" data-dropdown="dropdown"> <span class="caret" /> <span class="glyphicon glyphicon-remove" /> </span> </div> </div>'})[0] == $select[0], 'select returned')
+      })
 })
