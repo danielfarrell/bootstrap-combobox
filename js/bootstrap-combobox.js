@@ -49,7 +49,6 @@
   , setup: function () {
       var combobox = $(this.template());
       this.$source.before(combobox);
-      this.$source.hide();
       return combobox;
     }
 
@@ -107,7 +106,7 @@
     this.$element.attr('required', this.$source.attr('required'))
     this.$element.attr('rel', this.$source.attr('rel'))
     this.$element.attr('title', this.$source.attr('title'))
-    this.$element.attr('class', this.$source.attr('class'))
+    this.$element.attr('class', this.$source.attr('class')).removeClass('hidden');
     this.$element.attr('tabindex', this.$source.attr('tabindex'))
     this.$source.removeAttr('tabindex')
     if (this.$source.attr('disabled')!==undefined)
