@@ -1,5 +1,5 @@
 /* =============================================================
- * bootstrap-combobox.js v1.1.7
+ * bootstrap-combobox.js v1.1.8
  * =============================================================
  * Copyright 2012 Daniel Farrell
  *
@@ -16,7 +16,7 @@
  * limitations under the License.
  * ============================================================ */
 
-!function( $ ) {
+(function( $ ) {
 
  "use strict";
 
@@ -452,11 +452,11 @@
   };
 
   $.fn.combobox.defaults = {
-    bsVersion: '3'
+    bsVersion: '4'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#" class="dropdown-item"></a></li>'
   };
 
   $.fn.combobox.Constructor = Combobox;
 
-}( window.jQuery );
+}( window.jQuery ));
