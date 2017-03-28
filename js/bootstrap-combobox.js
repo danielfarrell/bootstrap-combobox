@@ -31,7 +31,7 @@
     this.$element = this.$container.find('input[type=text]');
     this.$target = this.$container.find('input[type=hidden]');
     this.$button = this.$container.find('.dropdown-toggle');
-    this.$menu = $(this.options.menu).appendTo('body');
+    this.$menu = $(this.options.menu).appendTo(this.$container);
     this.matcher = this.options.matcher || this.matcher;
     this.sorter = this.options.sorter || this.sorter;
     this.highlighter = this.options.highlighter || this.highlighter;
