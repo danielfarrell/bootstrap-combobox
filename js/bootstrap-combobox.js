@@ -1,5 +1,5 @@
 /* =============================================================
- * bootstrap-combobox.js v1.1.6
+ * bootstrap-combobox.js v1.1.8
  * =============================================================
  * Copyright 2012 Daniel Farrell
  *
@@ -16,7 +16,7 @@
  * limitations under the License.
  * ============================================================ */
 
-!function( $ ) {
+(function( $ ) {
 
  "use strict";
 
@@ -97,6 +97,9 @@
 
   , transferAttributes: function() {
     this.options.placeholder = this.$source.attr('data-placeholder') || this.options.placeholder
+    if(this.options.appendId !== "undefined") {
+    	this.$element.attr('id', this.$source.attr('id') + this.options.appendId);
+    }
     this.$element.attr('placeholder', this.options.placeholder)
     this.$target.prop('name', this.$source.prop('name'))
     this.$target.val(this.$source.val())
@@ -327,16 +330,33 @@
         case 38: // up arrow
           e.preventDefault();
           this.prev();
+          this.fixMenuScroll();
           break;
 
         case 40: // down arrow
           e.preventDefault();
           this.next();
+          this.fixMenuScroll();
           break;
       }
 
       e.stopPropagation();
     }
+
+  , fixMenuScroll: function(){
+      var active = this.$menu.find('.active');
+      if(active.length){
+          var top = active.position().top;
+          var bottom = top + active.height();
+          var scrollTop = this.$menu.scrollTop();
+          var menuHeight = this.$menu.height();
+          if(bottom > menuHeight){
+              this.$menu.scrollTop(scrollTop + bottom - menuHeight);
+          } else if(top < 0){
+              this.$menu.scrollTop(scrollTop + top);
+          }
+      }
+  }
 
   , keydown: function (e) {
       this.suppressKeyPressRepeat = ~$.inArray(e.keyCode, [40,38,9,13,27]);
@@ -351,6 +371,10 @@
   , keyup: function (e) {
       switch(e.keyCode) {
         case 40: // down arrow
+         if (!this.shown){
+           this.toggle();
+         }
+         break;
         case 39: // right arrow
         case 38: // up arrow
         case 37: // left arrow
@@ -428,11 +452,11 @@
   };
 
   $.fn.combobox.defaults = {
-    bsVersion: '3'
+    bsVersion: '4'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
-  , item: '<li><a href="#"></a></li>'
+  , item: '<li><a href="#" class="dropdown-item"></a></li>'
   };
 
   $.fn.combobox.Constructor = Combobox;
 
-}( window.jQuery );
+}( window.jQuery ));
