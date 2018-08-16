@@ -38,6 +38,7 @@
     this.shown = false;
     this.selected = false;
     this.renderLimit = this.options.renderLimit || -1;
+    this.clearIfNoMatch = this.options.clearIfNoMatch || true;
     this.refresh();
     this.transferAttributes();
     this.listen();
@@ -417,7 +418,8 @@
       this.focused = false;
       var val = this.$element.val();
       if (!this.selected && val !== '' ) {
-        this.$element.val('');
+        if(that.clearIfNoMatch)
+          this.$element.val('');
         this.$source.val('').trigger('change');
         this.$target.val('').trigger('change');
       }
