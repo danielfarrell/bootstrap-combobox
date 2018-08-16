@@ -38,7 +38,7 @@
     this.shown = false;
     this.selected = false;
     this.renderLimit = this.options.renderLimit || -1;
-    this.clearIfNoMatch = this.options.clearIfNoMatch || true;
+    this.clearIfNoMatch = this.options.clearIfNoMatch;
     this.refresh();
     this.transferAttributes();
     this.listen();
@@ -460,6 +460,7 @@
     bsVersion: '4'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#" class="dropdown-item"></a></li>'
+  , clearIfNoMatch: true
   };
 
   $.fn.combobox.Constructor = Combobox;
