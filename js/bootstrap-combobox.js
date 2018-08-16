@@ -37,6 +37,7 @@
     this.highlighter = this.options.highlighter || this.highlighter;
     this.shown = false;
     this.selected = false;
+    this.renderLimit = this.options.renderLimit || -1;
     this.refresh();
     this.transferAttributes();
     this.listen();
@@ -214,6 +215,8 @@
       var that = this;
 
       items = $(items).map(function (i, item) {
+        if(~that.renderLimit && i >= that.renderLimit)
+          return;
         i = $(that.options.item).attr('data-value', item);
         i.find('a').html(that.highlighter(item));
         return i[0];
