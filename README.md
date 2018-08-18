@@ -72,6 +72,12 @@ When activating the plugin, you may include an object containing options for the
 
  `appendId`: The desired id of the transformed combobox. This will become the id attr and can be mapped to a label using the for attribute. Useful for accessibility.
 
+ `renderLimit`: The maximum number of suggestions to render on the screen at one time. Useful for dealing with source elements with items.
+
+ `clearIfNoMatch`: When true, the combobox will clear its contents when unfocusing if a matching option is not selected. Defaults to true.
+ 
+ 
+
 
 ## Dependencies
 Uses the latest 1.X version of jQuery and the latest 2.X or 3.X of bootstrap.

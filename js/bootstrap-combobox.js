@@ -37,6 +37,8 @@
     this.highlighter = this.options.highlighter || this.highlighter;
     this.shown = false;
     this.selected = false;
+    this.renderLimit = this.options.renderLimit || -1;
+    this.clearIfNoMatch = this.options.clearIfNoMatch;
     this.refresh();
     this.transferAttributes();
     this.listen();
@@ -214,6 +216,8 @@
       var that = this;
 
       items = $(items).map(function (i, item) {
+        if(~that.renderLimit && i >= that.renderLimit)
+          return;
         i = $(that.options.item).attr('data-value', item);
         i.find('a').html(that.highlighter(item));
         return i[0];
@@ -414,7 +418,8 @@
       this.focused = false;
       var val = this.$element.val();
       if (!this.selected && val !== '' ) {
-        this.$element.val('');
+        if(that.clearIfNoMatch)
+          this.$element.val('');
         this.$source.val('').trigger('change');
         this.$target.val('').trigger('change');
       }
@@ -455,6 +460,7 @@
     bsVersion: '4'
   , menu: '<ul class="typeahead typeahead-long dropdown-menu"></ul>'
   , item: '<li><a href="#" class="dropdown-item"></a></li>'
+  , clearIfNoMatch: true
   };
 
   $.fn.combobox.Constructor = Combobox;
