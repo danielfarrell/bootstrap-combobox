@@ -90,6 +90,7 @@ http://dl.dropbox.com/u/21368/bootstrap-combobox/index.html
 ### Bootstrap 3.0 Version
 http://bootstrap-combobox-test.herokuapp.com/
 
+## Some styling will not render with Bootstrap 4 due to class changes in bootstrap 4 from 3
 ## License
 
 Licensed under the Apache License, Version 2.0
