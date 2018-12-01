@@ -23,6 +23,8 @@
  /* COMBOBOX PUBLIC CLASS DEFINITION
   * ================================ */
 
+  var hasPopper = typeof(Popper) !== 'undefined';
+
   var Combobox = function ( element, options ) {
     this.options = $.extend({}, $.fn.combobox.defaults, options);
     this.template = this.options.template || this.template
@@ -188,8 +190,8 @@
             <input type="hidden" />
             <div class="input-group">
               <input type="text" autocomplete="off" />
-              <span class="input-group-append">
-                <span class="input-group-text dropdown-toggle${this.options.iconCaret ? ' custom-icon' : ''}" data-dropdown="dropdown">
+              <span class="input-group-append"${hasPopper ? ' data-toggle="dropdown" data-reference="parent"' : ''}>
+                <span class="input-group-text dropdown-toggle${this.options.iconCaret ? ' custom-icon' : ''}">
                   ${this.options.iconCaret ? `<span class="${this.options.iconCaret} pulldown" />` : ''}
                   ${this.options.iconRemove ? `<span class="${this.options.iconRemove} remove" />` : '<span class="utf-remove remove" />'}
                 </span>
