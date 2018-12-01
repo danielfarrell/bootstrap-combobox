@@ -75,6 +75,10 @@ When activating the plugin, you may include an object containing options for the
  `renderLimit`: The maximum number of suggestions to render on the screen at one time. Useful for dealing with source elements with items.
 
  `clearIfNoMatch`: When true, the combobox will clear its contents when unfocusing if a matching option is not selected. Defaults to true.
+
+ `iconCaret`: Custom icon font class for the caret button of the combobox. This is only effective when using {bsVersion: '4'}. (e.g. 'fas fa-caret-down' when using Font Awesome)
+
+ `iconRemove`: Custom icon font class for the remove button of the combobox. This is only effective when using {bsVersion: '4'}. (e.g. 'fas fa-times' when using Font Awesome)
  
  
 
