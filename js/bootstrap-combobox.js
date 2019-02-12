@@ -24,6 +24,7 @@
   * ================================ */
 
   var Combobox = function ( element, options ) {
+    if (this.removeIfComboboxed(element)) return;
     this.options = $.extend({}, $.fn.combobox.defaults, options);
     this.template = this.options.template || this.template
     this.$source = $(element);
@@ -68,6 +69,15 @@
       this.disabled = false;
       this.$container.removeClass('combobox-disabled');
     }
+
+    // Remove combobox generated dropdowns from cached page to avoid duplicating dropdowns when navigating back or forward using Turbolinks
+  , removeIfComboboxed: function(element) {
+    let $container = $(element).parents('[data-combobox-generated]');
+    let isPreviousCombobox = $container.length > 0;
+    if (isPreviousCombobox) $container.remove();
+    return isPreviousCombobox;
+  }
+
   , parse: function () {
       var that = this
         , map = {}
@@ -180,9 +190,9 @@
 
   , template: function() {
       if (this.options.bsVersion == '2') {
-        return '<div class="combobox-container"><input type="hidden" /> <div class="input-append"> <input type="text" autocomplete="off" /> <span class="add-on dropdown-toggle" data-dropdown="dropdown"> <span class="caret"/> <i class="icon-remove"/> </span> </div> </div>'
+        return '<div class="combobox-container" data-combobox-generated><input type="hidden" /> <div class="input-append"> <input type="text" autocomplete="off" /> <span class="add-on dropdown-toggle" data-dropdown="dropdown"> <span class="caret"/> <i class="icon-remove"/> </span> </div> </div>'
       } else {
-        return '<div class="combobox-container"> <input type="hidden" /> <div class="input-group"> <input type="text" autocomplete="off" /> <span class="input-group-addon dropdown-toggle" data-dropdown="dropdown"> <span class="caret" /> <span class="glyphicon glyphicon-remove" /> </span> </div> </div>'
+        return '<div class="combobox-container" data-combobox-generated> <input type="hidden" /> <div class="input-group"> <input type="text" autocomplete="off" /> <span class="input-group-addon dropdown-toggle" data-dropdown="dropdown"> <span class="caret" /> <span class="glyphicon glyphicon-remove" /> </span> </div> </div>'
       }
     }
 
