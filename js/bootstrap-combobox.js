@@ -23,7 +23,7 @@
  /* COMBOBOX PUBLIC CLASS DEFINITION
   * ================================ */
 
-  var hasPopper = typeof(Popper) !== 'undefined';
+  var hasPopper = typeof Popper !== 'undefined';
 
   var Combobox = function ( element, options ) {
     this.options = $.extend({}, $.fn.combobox.defaults, options);
@@ -186,18 +186,13 @@
       } else if (this.options.bsVersion == '3') {
         return '<div class="combobox-container"> <input type="hidden" /> <div class="input-group"> <input type="text" autocomplete="off" /> <span class="input-group-addon dropdown-toggle" data-dropdown="dropdown"> <span class="caret pulldown" /> <span class="glyphicon glyphicon-remove remove" /> </span> </div> </div>'
       } else {
-        return `<div class="combobox-container">
-            <input type="hidden" />
-            <div class="input-group">
-              <input type="text" autocomplete="off" />
-              <span class="input-group-append"${hasPopper ? ' data-toggle="dropdown" data-reference="parent"' : ''}>
-                <span class="input-group-text dropdown-toggle${this.options.iconCaret ? ' custom-icon' : ''}">
-                  ${this.options.iconCaret ? `<span class="${this.options.iconCaret} pulldown" />` : ''}
-                  ${this.options.iconRemove ? `<span class="${this.options.iconRemove} remove" />` : '<span class="utf-remove remove" />'}
-                </span>
-              </span>
-            </div>
-          </div>`;
+        return '<div class="combobox-container"> <input type="hidden" /> <div class="input-group"> <input type="text" autocomplete="off" />'
+          + '<span class="input-group-append"' + (hasPopper ? ' data-toggle="dropdown" data-reference="parent"' : '') + '>'
+            + '<span class="input-group-text dropdown-toggle' + (this.options.iconCaret ? ' custom-icon' : '') + '">'
+              + (this.options.iconCaret ? '<span class="' + this.options.iconCaret + ' pulldown" />' : '')
+              + (this.options.iconRemove ? '<span class="' + this.options.iconRemove + ' remove" />' : '<span class="utf-remove remove" />')
+            + '</span>'
+          + '</span> </div> </div>';
       }
     }
 
