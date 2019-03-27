@@ -84,7 +84,7 @@ When activating the plugin, you may include an object containing options for the
 
 
 ## Dependencies
-Uses the latest 1.X version of jQuery and the latest 2.X or 3.X of bootstrap.
+Uses the latest 1.X version of jQuery and the latest version of Bootstrap.
 
 ## Live Example
 

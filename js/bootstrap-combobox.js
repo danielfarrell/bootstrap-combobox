@@ -1,7 +1,7 @@
 /* =============================================================
- * bootstrap-combobox.js v1.1.8
+ * bootstrap-combobox.js v1.2.0
  * =============================================================
- * Copyright 2012 Daniel Farrell
+ * Copyright 2019 Daniel Farrell
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
