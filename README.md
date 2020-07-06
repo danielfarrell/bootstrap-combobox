@@ -19,7 +19,13 @@ Previously, this was the only way to install the plugin. You will need two files
 npm install @danielfarrell/bootstrap-combobox
 ```
 
-#### 3. Bower install
+#### 3. Yarn install
+
+```
+npm install @danielfarrell/bootstrap-combobox
+```
+
+#### 4. Bower install
 
 This plugin is now in bower! If you've already installed bower on your machine, simply use the command:
 
