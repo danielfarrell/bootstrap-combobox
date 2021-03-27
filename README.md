@@ -68,7 +68,7 @@ When activating the plugin, you may include an object containing options for the
 
  `template`: Custom function that returns markup for the combobox.
 
- `bsVersion`: Version of bootstrap being used. This is used by the default `template` function to generate markup correctly. Defaults to '3'. Set to '2' for compatibility with Bootstrap 2
+ `bsVersion`: Version of bootstrap being used. This is used by the default `template` function to generate markup correctly. Defaults to '4'. Set to '2' or '3' for compatibility with Bootstrap 2 or Bootstrap 3 respectively.
 
  `appendId`: The desired id of the transformed combobox. This will become the id attr and can be mapped to a label using the for attribute. Useful for accessibility.
 
@@ -79,8 +79,8 @@ When activating the plugin, you may include an object containing options for the
  `iconCaret`: Custom icon font class for the caret button of the combobox. This is only effective when using {bsVersion: '4'}. (e.g. 'fas fa-caret-down' when using Font Awesome)
 
  `iconRemove`: Custom icon font class for the remove button of the combobox. This is only effective when using {bsVersion: '4'}. (e.g. 'fas fa-times' when using Font Awesome)
- 
- 
+
+
 
 
 ## Dependencies
