@@ -109,6 +109,7 @@
     this.$target.val(this.$source.val())
     this.$source.removeAttr('name')  // Remove from source otherwise form will pass parameter twice.
     this.$element.attr('required', this.$source.attr('required'))
+	this.$source.removeAttr('required')
     this.$element.attr('rel', this.$source.attr('rel'))
     this.$element.attr('title', this.$source.attr('title'))
     this.$element.attr('class', this.$source.attr('class'))
