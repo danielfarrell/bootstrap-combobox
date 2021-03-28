@@ -271,7 +271,8 @@
           this.hide();
         } else {
           this.clearElement();
-          this.lookup();
+          this.$menu.html(this.sourceElements);
+          this.show();
         }
       }
     }
@@ -299,6 +300,13 @@
 
   , refresh: function () {
     this.source = this.parse();
+    var that = this;
+    this.sourceElements = $(this.source).map(function (i, item) {
+      i = $(that.options.item).attr('data-value', item);
+      i.find('a').html(item);
+      return i[0];
+    })
+    this.$menu.html(this.sourceElements);
     this.options.items = this.source.length;
   }
 
@@ -409,8 +417,17 @@
           if (!this.shown) {return;}
           this.hide();
           break;
-
-        default:
+        
+		case 8:  //backspace
+        case 46: //delete
+          if(!this.$element.val()){
+            this.clearTarget();
+            this.triggerChange();
+            this.clearElement();
+            break;
+          }
+        
+		default:
           this.clearTarget();
           this.lookup();
       }
