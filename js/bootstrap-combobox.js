@@ -120,11 +120,14 @@
 
   , select: function () {
       var val = this.$menu.find('.active').attr('data-value');
-      this.$element.val(this.updater(val)).trigger('change');
-      this.$target.val(this.map[val]).trigger('change');
-      this.$source.val(this.map[val]).trigger('change');
+      this.$element.val(this.updater(val));
+      this.$target.val(this.map[val]);
+      this.$source.val(this.map[val]);
       this.$container.addClass('combobox-selected');
       this.selected = true;
+      this.$element.trigger('change');
+      this.$target.trigger('change');
+      this.$source.trigger('change');
       return this.hide();
     }
 
