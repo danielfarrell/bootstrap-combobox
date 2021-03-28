@@ -108,12 +108,12 @@
     this.$target.prop('name', this.$source.prop('name'))
     this.$target.val(this.$source.val())
     this.$source.removeAttr('name')  // Remove from source otherwise form will pass parameter twice.
-    this.$element.attr('required', this.$source.attr('required'))
-    this.$element.attr('rel', this.$source.attr('rel'))
-    this.$element.attr('title', this.$source.attr('title'))
-    this.$element.attr('class', this.$source.attr('class'))
-    this.$element.attr('tabindex', this.$source.attr('tabindex'))
-    this.$source.removeAttr('tabindex')
+    var that = this,
+      attributes = this.$source.prop("attributes");
+    $.each(attributes, function() {
+      if(this.name !== 'style')
+        that.$element.attr(this.name, this.value);
+    });
     if (this.$source.attr('disabled')!==undefined)
       this.disable();
   }
