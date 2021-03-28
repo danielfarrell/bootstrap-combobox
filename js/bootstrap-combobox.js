@@ -128,6 +128,24 @@
       return this.hide();
     }
 
+    /**
+     * Can be used to sync various UI elements to the value currently in this.$element.
+     * 
+     * Example use case:
+     * $("#myselect").val(localStorage.getItem("savedvalue"));
+     * $("#myselect").data("combobox").syncFromSource();
+     */
+  , syncFromSource: function () {
+      var val = this.$source[0].options[this.$source[0].selectedIndex].innerHTML;
+      if(val !== "")
+        this.select(val);
+      else
+      {
+        this.$element.val('');
+        this.clearTarget();
+      }
+    }
+   
   , updater: function (item) {
       return item;
     }
