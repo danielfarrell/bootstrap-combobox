@@ -278,10 +278,12 @@
   }
 
   , scrollSafety: function(e) {
-      if (e.target.tagName == 'UL') {
-          this.$element.off('blur');
-      }
+    var closestUl = $(e.target).closest('ul');
+    if (closestUl.length > 0 && closestUl[0] === this.$menu[0]) {
+      this.$element.off('blur');
+    }
   }
+
   , clearElement: function () {
     this.$element.val('').focus();
   }
